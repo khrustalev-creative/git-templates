@@ -1,28 +1,48 @@
-    <script>
-    // 1. Создать скрипт с уникальным ID
-    const scriptId = 'git-templates-' + Date.now();
-    const script = document.createElement('script');
-    script.id = scriptId;
-    
-    // 2. Использовать GitHub Pages с timestamp и хешем
-    script.src = `https://khrustalev-creative.github.io/git-templates/test.js?t=${Date.now()}`;
-    
-    // 3. Добавить
-    document.head.appendChild(script);
-    
-    // 4. Авто-обновление каждые 30 секунд
-    setInterval(() => {
-        const newScript = document.createElement('script');
-        newScript.id = 'git-templates-' + Date.now();
-        newScript.src = `https://khrustalev-creative.github.io/git-templates/test.js?t=${Date.now()}`;
-        
-        // Удалить старый
-        const old = document.getElementById(scriptId);
-        if (old) old.remove();
-        
-        // Добавить новый
-        document.head.appendChild(newScript);
-    }, 60000);
-    </script>
+<script>
+  // 1. Создать скрипт с уникальным ID
+  const scriptId = "git-templates-" + Date.now()
+  const script = document.createElement("script")
+  script.id = scriptId
 
-    
+  // 2. Использовать GitHub Pages с timestamp и хешем
+  script.src = `https://khrustalev-creative.github.io/git-templates/test.js?t=${Date.now()}`
+
+  // 3. Добавить
+  document.head.appendChild(script)
+
+  // 4. Авто-обновление каждые 30 секунд
+  setInterval(() => {
+    const newScript = document.createElement("script")
+    newScript.id = "git-templates-" + Date.now()
+    newScript.src = `https://khrustalev-creative.github.io/git-templates/test.js?t=${Date.now()}`
+
+    // Удалить старый
+    const old = document.getElementById(scriptId)
+    if (old) old.remove()
+
+    // Добавить новый
+    document.head.appendChild(newScript)
+  }, 60000)
+</script>
+
+<script>
+  ;(function () {
+    const VERSION = Date.now()
+    const script = document.createElement("script")
+
+    // Основной источник
+    script.src = `https://khrustalev-creative.github.io/git-templates/test.js?t=${Date.now()}`
+
+    // Если не загрузится за 5 секунд, пробуем другой
+    const timeout = setTimeout(() => {
+      script.remove()
+      const fallback = document.createElement("script")
+      fallback.src = `https://khrustalev-creative.github.io/git-templates/test.js?t=${Date.now()}`
+      document.head.appendChild(fallback)
+      console.log("Using fallback CDN")
+    }, 5000)
+
+    script.onload = () => clearTimeout(timeout)
+    document.head.appendChild(script)
+  })()
+</script>
