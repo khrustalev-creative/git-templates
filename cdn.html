@@ -1,107 +1,46 @@
 <script>
-  // 1. Создать скрипт с уникальным ID
-  const scriptId = "git-templates-" + Date.now()
-  const script = document.createElement("script")
-  script.id = scriptId
-
-  // 2. Использовать GitHub Pages с timestamp и хешем
-  script.src = `https://khrustalev-creative.github.io/git-templates/test.js?t=${Date.now()}`
-
-  // 3. Добавить
-  document.head.appendChild(script)
-
-  // 4. Авто-обновление каждые 30 секунд
-  setInterval(() => {
-    const newScript = document.createElement("script")
-    newScript.id = "git-templates-" + Date.now()
-    newScript.src = `https://khrustalev-creative.github.io/git-templates/test.js?t=${Date.now()}`
-
-    // Удалить старый
-    const old = document.getElementById(scriptId)
-    if (old) old.remove()
-
-    // Добавить новый
-    document.head.appendChild(newScript)
-  }, 5000)
-</script>
-
-<script>
+  // ⚡ УЛЬТРА-БЫСТРЫЙ ЗАГРУЗЧИК (обновление каждые 5 секунд)
   ;(function () {
-    const VERSION = Date.now()
-    const script = document.createElement("script")
+    const BASE_URL = "https://khrustalev-creative.github.io/git-templates"
+    let updateCount = 0
 
-    // Основной источник
-    script.src = `https://khrustalev-creative.github.io/git-templates/test.js?t=${Date.now()}`
+    // Функция быстрой загрузки
+    function fastLoad() {
+      updateCount++
+      const timestamp = Date.now()
 
-    // Если не загрузится за 5 секунд, пробуем другой
-    const timeout = setTimeout(() => {
-      script.remove()
-      const fallback = document.createElement("script")
-      fallback.src = `https://khrustalev-creative.github.io/git-templates/test.js?t=${Date.now()}`
-      document.head.appendChild(fallback)
-      console.log("Using fallback CDN")
-    }, 5000)
+      // CSS (новый тег каждый раз)
+      const css = document.createElement("link")
+      css.rel = "stylesheet"
+      css.href = `${BASE_URL}/styles.css?t=${timestamp}&v=${updateCount}`
+      document.head.appendChild(css)
 
-    script.onload = () => clearTimeout(timeout)
-    document.head.appendChild(script)
+      // JS (новый тег каждый раз)
+      const js = document.createElement("script")
+      js.src = `${BASE_URL}/app.js?t=${timestamp}&v=${updateCount}`
+      document.head.appendChild(js)
+
+      console.log(`⚡ Обновление #${updateCount} - ${new Date().toLocaleTimeString()}`)
+    }
+
+    // Загрузить сразу
+    fastLoad()
+
+    // ⚡ ОБНОВЛЕНИЕ КАЖДЫЕ 5 СЕКУНД!
+    setInterval(fastLoad, 5000)
+
+    // Добавить кнопку для ручного обновления
+    const btn = document.createElement("button")
+    btn.innerHTML = "🔄 Обновить сейчас"
+    btn.style.cssText = `
+    position: fixed; bottom: 20px; right: 20px;
+    background: #4CAF50; color: white; padding: 10px 15px;
+    border: none; border-radius: 5px; cursor: pointer;
+    z-index: 9999; font-size: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  `
+    btn.onclick = fastLoad
+    document.body.appendChild(btn)
+
+    console.log("✅ Ультра-быстрый загрузчик запущен (5 секунд)")
   })()
-</script>
-
-
-<script>
-  // Функция для загрузки и обновления скрипта
-  function loadAndUpdateScript() {
-    const scriptId = "git-templates-" + Date.now()
-    const script = document.createElement("script")
-    script.id = scriptId
-    script.src = `https://khrustalev-creative.github.io/git-templates/script.js?t=${Date.now()}`
-    document.head.appendChild(script)
-    
-    return scriptId
-  }
-
-  // Функция для загрузки и обновления стилей
-  function loadAndUpdateStyles() {
-    const styleId = "git-styles-" + Date.now()
-    
-    // Удалить старые стили
-    const oldStyles = document.querySelectorAll('link[href*="khrustalev-creative.github.io/git-templates/style.css"]')
-    oldStyles.forEach(style => style.remove())
-    
-    // Создать новый link элемент
-    const link = document.createElement("link")
-    link.id = styleId
-    link.rel = "stylesheet"
-    link.href = `https://khrustalev-creative.github.io/git-templates/style.css?t=${Date.now()}`
-    document.head.appendChild(link)
-    
-    return styleId
-  }
-
-  // Инициализация - загрузить сразу
-  let currentScriptId = loadAndUpdateScript()
-  loadAndUpdateStyles()
-
-  // Авто-обновление каждые 30 секунд (можно изменить на 60000 для 60 секунд)
-  setInterval(() => {
-    console.log('🔄 Проверяем обновления...')
-    
-    // Обновить скрипт
-    const newScriptId = "git-templates-" + Date.now()
-    const oldScript = document.getElementById(currentScriptId)
-    
-    if (oldScript) oldScript.remove()
-    
-    const newScript = document.createElement("script")
-    newScript.id = newScriptId
-    newScript.src = `https://khrustalev-creative.github.io/git-templates/script.js?t=${Date.now()}`
-    document.head.appendChild(newScript)
-    
-    currentScriptId = newScriptId
-    
-    // Обновить стили
-    loadAndUpdateStyles()
-    
-    console.log('✅ Скрипт и стили обновлены')
-  }, 30000) // 30 секунд
 </script>
