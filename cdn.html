@@ -1,69 +1,98 @@
 <script>
-  // ⚡ ПОЛНАЯ ЗАГРУЗКА СКРИПТА И СТИЛЕЙ С ПЕРЕЗАГРУЗКОЙ
+  // ⚡ УЛУЧШЕННАЯ ВЕРСИЯ С ОБНОВЛЕНИЕМ CSS
   ;(function () {
-    const HOST = "http://localhost:5501"
-    let lastJsVersion = null
-    let lastCssVersion = null
+    let useLocal = true
+    let lastJsTime = 0
+    let lastCssTime = 0
+    let cssVersion = 0
 
-    // Загрузить CSS стили
-    function loadCSS() {
-      const timestamp = Date.now()
+    function load() {
+      const host = useLocal ? "http://localhost:5501" : "https://khrustalev-creative.github.io/git-templates"
+
+      const t = Date.now()
+
+      // CSS - добавляем версию
+      cssVersion++
       const css = document.createElement("link")
       css.rel = "stylesheet"
-      css.type = "text/css"
-      css.href = `${HOST}/styles.css?t=${timestamp}`
+      css.href = `${host}/styles.css?t=${t}&v=${cssVersion}`
+      css.dataset.version = cssVersion
+      css.onerror = () => {
+        useLocal = false
+        load()
+      }
       document.head.appendChild(css)
-    }
 
-    // Загрузить JavaScript
-    function loadJS() {
-      const timestamp = Date.now()
+      // JS
       const js = document.createElement("script")
-      js.src = `${HOST}/app.js?t=${timestamp}`
+      js.src = `${host}/app.js?t=${t}`
+      js.onerror = () => {
+        useLocal = false
+        load()
+      }
       document.head.appendChild(js)
+
+      console.log(useLocal ? "📡 Локальный" : "🌐 GitHub")
     }
 
-    // Первоначальная загрузка
-    loadCSS()
-    loadJS()
+    // Функция обновления CSS (без перезагрузки страницы)
+    function updateCSS(host) {
+      cssVersion++
+      const t = Date.now()
 
-    // Проверять изменения
+      // Удалить только старые стили с этого хоста
+      document.querySelectorAll(`link[href*="${host}"]`).forEach((link) => {
+        if (link.href.includes("styles.css")) {
+          link.remove()
+        }
+      })
+
+      // Добавить новые
+      const newCss = document.createElement("link")
+      newCss.rel = "stylesheet"
+      newCss.href = `${host}/styles.css?t=${t}&v=${cssVersion}`
+      newCss.dataset.version = cssVersion
+      document.head.appendChild(newCss)
+
+      console.log("🎨 CSS обновлен")
+    }
+
+    // Проверять обновления
     setInterval(async () => {
       try {
-        // Проверить JS файл
-        const jsResponse = await fetch(`${HOST}/app.js?_=${Date.now()}`)
-        const jsVersion = jsResponse.headers.get("last-modified") || jsResponse.headers.get("etag")
+        const host = useLocal ? "http://localhost:5501" : "https://khrustalev-creative.github.io/git-templates"
 
-        // Проверить CSS файл
-        const cssResponse = await fetch(`${HOST}/styles.css?_=${Date.now()}`)
-        const cssVersion = cssResponse.headers.get("last-modified") || cssResponse.headers.get("etag")
+        // Параллельно проверяем оба файла
+        const [jsRes, cssRes] = await Promise.all([
+          fetch(`${host}/app.js?check=${Date.now()}`),
+          fetch(`${host}/styles.css?check=${Date.now()}`),
+        ])
 
-        // Если JS изменился - перезагрузить всю страницу
-        if (lastJsVersion && jsVersion !== lastJsVersion) {
-          console.log("🔄 JS изменен, перезагружаю страницу...")
+        const jsTime = new Date(jsRes.headers.get("last-modified")).getTime()
+        const cssTime = new Date(cssRes.headers.get("last-modified")).getTime()
+
+        // Если JS изменился - перезагрузка
+        if (lastJsTime && jsTime > lastJsTime) {
+          console.log("🔄 JS изменен, перезагружаю...")
           window.location.reload()
           return
         }
 
-        lastJsVersion = jsVersion
-
         // Если CSS изменился - обновить только стили
-        if (lastCssVersion && cssVersion !== lastCssVersion) {
-          console.log("🎨 CSS изменен, обновляю стили...")
-
-          // Удалить старые стили
-          document.querySelectorAll('link[href*="localhost:5500"]').forEach((link) => {
-            if (link.href.includes("styles.css")) link.remove()
-          })
-
-          // Добавить новые
-          loadCSS()
+        if (lastCssTime && cssTime > lastCssTime) {
+          console.log("🎨 CSS изменен, обновляю...")
+          updateCSS(host)
         }
 
-        lastCssVersion = cssVersion
-      } catch (error) {
-        // Сервер недоступен
+        // Сохраняем время последней проверки
+        lastJsTime = jsTime || lastJsTime
+        lastCssTime = cssTime || lastCssTime
+      } catch {
+        useLocal = false
       }
-    }, 300) // Проверка каждые 300ms
+    }, 300) // Чаще проверяем - 300ms
+
+    // Первоначальная загрузка
+    load()
   })()
 </script>

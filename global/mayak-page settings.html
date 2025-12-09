@@ -1,0 +1,117 @@
+<style>
+  /* ========== Состояние шапки на опубликованном сайте ========== */
+  .header,
+  .h-menu {
+    position: fixed;
+  }
+  /* ========== Состояния для анимиаций ========== */
+  .screen-off-top {
+    transform: translateY(-100%) !important;
+  }
+
+  .screen-off-bottom {
+    transform: translateY(100%) !important;
+  }
+
+  .screen-off-left {
+    transform: translateX(-100%) !important;
+  }
+
+  .screen-off-right {
+    transform: translateX(100%) !important;
+  }
+
+  .visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .hidden {
+    opacity: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+  }
+
+  .display-none {
+    display: none !important;
+    height: 0 !important;
+    width: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+  }
+
+  .overflow-hidden {
+    overflow: hidden !important;
+  }
+  .droplist__content {
+    max-height: 0;
+  }
+  .droplist__content-inner {
+    opacity: 0;
+  }
+  .service-included__items,
+  .marqee__items-inner,
+  .swiper-wrapper {
+    flex-wrap: nowrap !important;
+  }
+
+  .full-screen-edit {
+    /* Fallback для старых браузеров */
+    height: 100vh;
+
+    /* Для современных браузеров */
+    height: 100dvh;
+
+    /* Для Safari */
+    /* height: -webkit-fill-available; */
+  }
+  @supports (-webkit-touch-callout: none) {
+    .full-screen-edit {
+      height: -webkit-fill-available;
+    }
+  }
+
+  @media screen and (min-width: 992px) {
+    .card-img-text-4__top {
+      opacity: 0;
+    }
+  }
+  /* .production-catalog__section {
+    display: none;
+    opacity: 0;
+  } */
+  .product-page-cover__gallery,
+  .product-page-cover__slider,
+  .product-page-cover__wrapper {
+    height: 100%;
+  }
+  /* @media screen and (max-width: 991px) {
+    .product-page-cover__slider {
+      height: 48rem !important;
+    }
+  }
+  @media screen and (max-width: 479px) {
+    .product-page-cover__slider {
+      height: 43rem !important;
+    }
+  } */
+  @media screen and (min-width: 992px) {
+    .product-page-cover__gallery {
+      position: absolute !important;
+    }
+  }
+  .preloader {
+    display: flex;
+  }
+  .cookie-modal {
+    position: fixed;
+  }
+  /* @media screen and (max-width: 992px) {
+    .header {
+      height: 12rem
+    }
+  } */
+  .service-included--production {
+    height: 100dvh;
+  }
+</style>

@@ -1,0 +1,692 @@
+<style>
+  @layer reset, base, utilities, help;
+
+  /* -------------------------------------------------------------------------------------- */
+
+  /* ========================= Сброс ========================= */
+  @layer reset {
+    /* [+] */
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* [+] Ссылки и кнопки по умолчанию */
+    a,
+    button {
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    /* [+] Параграфы Taptop */
+    p {
+      margin-block-start: 0;
+      margin-block-end: 0;
+    }
+  }
+
+  /* -------------------------------------------------------------------------------------- */
+
+  /* ========================= Базовые ========================== */
+  @layer base {
+    /* [+] Переменные и базоыве настройки */
+    :root {
+      /* [-] Базовый размер шрифта (1rem = 10px). Меняется или убирается, в зависимости от метода адаптивности. Удаляется для метода vw */
+      /* font-size: 62.5%; */
+
+      /* Цвета */
+
+      /* Для проекта */
+      --color-base: rgb(255, 255, 255);
+      --color-base-20: rgba(255, 255, 255, 0.2);
+      --color-menu: rgba(27, 27, 27, 0.6);
+
+      --color-black: rgb(10, 10, 10);
+
+      --color-alternate: rgb(10, 10, 10);
+      --color-light-grey: rgb(232, 232, 232);
+
+      --color-card: rgb(20, 20, 20);
+      --color-card-hover: rgb(51, 51, 51);
+
+      --color-points-red: rgb(193, 23, 24);
+      --color-points-grey: rgb(59, 59, 59);
+
+      --color-error: rgba(244, 93, 94, 1);
+
+      --color-stroke: rgb(110, 110, 110);
+
+      --color-gradient: linear-gradient(18deg, #0a0a0a 0%, #3c0606 50%);
+
+      /* Не меняются при изменении темы */
+      --color-white: rgb(255, 255, 255);
+
+      /* Эффект */
+      --blur: blur(1.2rem);
+
+      /* Для стайлгайда */
+      --color-alternate-contrast: rgb(20, 20, 20);
+
+      --color-base-contrast: rgb(35, 35, 35);
+      --color-neutral: rgb(205, 205, 205);
+      --color-opacity-05: rgba(25, 25, 25, 0.05);
+
+      /* Не меняются при изменении темы */
+      --color-base-static: rgb(25, 25, 25);
+      --color-alternate-static: rgb(239, 239, 239);
+      --color-accent: rgb(31, 49, 241);
+      --color-grid-guids: rgb(255, 0, 0);
+
+      /* Style Guide */
+      --color-styleguide-blue: rgb(31, 49, 241);
+      --color-styleguide-blue-light: rgb(230, 230, 255);
+      --color-styleguide-red: rgb(255, 0, 0);
+      --color-styleguide-red-light: rgba(255, 0, 0, 0.1);
+
+      /* Скругления */
+      /* --border-radius-xxs: 0.18rem; */
+
+      /* Габариты для хедера/меню */
+      --header-height: 8.8rem; /* высота шапки */
+      --header-footer: 5rem; /* высота нижней панели мобильного меню */
+
+      /* Система размеров. Если нет четкой системы в дизайне - неиспользуется, выставялется локально */
+      --size-line: clamp(1px, 0.1rem, 0.1rem);
+      --size-3xs: 0.2rem; /* 2px */
+      --size-xxs: 0.4rem; /* 4px */
+      --size-xs: 0.8rem; /* 8px */
+      --size-xss: 1.2rem; /* 12px */
+      --size-s: 1.6rem; /* 16px */
+      --size-sm: 2rem; /* 20px */
+      --size-m: 2.4rem; /* 24px */
+      --size-ml: 3.2rem; /* 32px */
+      --size-l: 4rem; /* 40px */
+      --size-lxl: 4.8rem; /* 48px */
+      --size-xl: 5.6rem; /* 56px */
+      --size-xlxxl: 6.4rem; /* 64px */
+      --size-xxl: 7.2rem; /* 72px */
+      --size-3xl: 8rem; /* 80px */
+      --size-4xl: 9rem; /* 90px */
+      --size-5xl: 10rem; /* 100px */
+      --size-6xl: 11rem; /* 110px */
+      --size-7xl: 12rem; /* 120px */
+      --size-8xl: 13rem; /* 130px */
+      --size-9xl: 14rem; /* 140px */
+      --size-10xl: 15rem; /* 150px */
+
+      /* Радиус */
+      --radius: 0.4rem;
+
+      /* Анимации */
+      --animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+      --animation-duration-short: 300ms;
+      --animation-duration-medium: 600ms;
+      --animation-duration-long: 800ms;
+      --animation-duration-instant: 200ms;
+      --animation-settings: 20s infinite linear;
+    }
+
+    @media screen and (max-width: 991px) {
+      html {
+        --header-height: 9rem; /* высота шапки */
+      }
+    }
+    @media screen and (max-width: 479px) {
+      html {
+        --header-height: 6.1rem; /* высота шапки */
+      }
+    }
+
+    /* -------------------------------------------------------------------------------------- */
+    /* Лучшие настройки для сглаживания шрифтов */
+    html {
+      /* Стандартное сглаживание */
+      text-rendering: optimizeLegibility;
+
+      /* WebKit браузеры (Chrome, Safari) */
+      -webkit-font-smoothing: antialiased;
+
+      /* Firefox */
+      -moz-osx-font-smoothing: grayscale;
+
+      /* Будущее свойство */
+      font-smooth: always;
+
+      /* Оптимизация производительности */
+      shape-rendering: geometricPrecision;
+    }
+
+    /* Дополнительные улучшения для текста */
+    body {
+      /* Улучшение читаемости */
+      font-kerning: normal;
+      font-variant-ligatures: common-ligatures;
+      font-feature-settings: "kern", "liga", "clig", "calt";
+    }
+
+    /* Для контента с анимациями */
+    .animated-content {
+      /* Временно отключаем сглаживание во время анимаций */
+      /* transform: translateZ(0);
+      backface-visibility: hidden;
+      perspective: 1000; */
+    }
+
+    /* -------------------------------------------------------------------------------------- */
+
+    /* [+] Тёмная тема. Добавляется к люблму блоку как микс */
+    .dark-theme {
+      /* Для проекта */
+      --color-base: rgb(10, 10, 10);
+      --color-base-20: rgba(10, 10, 10, 0.2);
+      --color-alternate: rgb(232, 232, 232);
+
+      /* Для стайлгайда */
+      --color-base-contrast: rgb(228, 230, 255);
+      --color-alternate-contrast: rgb(35, 35, 35);
+      --color-opacity-05: rgba(240, 240, 240, 0.05);
+    }
+
+    /* -------------------------------------------------------------------------------------- */
+
+    /* [+] Предотвращает дергание при открытии попапов, добавеляет нативную плавную прокрутку */
+
+    html {
+      scrollbar-gutter: stable;
+      /* В настройки страницы или проекта */
+      /* scroll-behavior: smooth; */
+      /* -webkit-overflow-scrolling: touch; */
+      background-color: #0a0a0a;
+    }
+
+    /* -------------------------------------------------------------------------------------- */
+
+    /* [+] Адаптивность, подставляется метод */
+    html {
+      font-size: 0.733vw;
+      font-size: 0.625vw;
+    }
+    @media screen and (max-width: 991px) {
+      html {
+        font-size: 1.3vw;
+      }
+    }
+    @media screen and (max-width: 479px) {
+      html {
+        font-size: 2.66vw;
+      }
+    }
+
+    /* -------------------------------------------------------------------------------------- */
+
+    .toggle-button:before {
+      transition: transform var(--animation-duration-short) var(--animation-timing-function);
+    }
+    /* div {
+      transition: all var(--animation-duration-short) var(--animation-timing-function);
+    }
+    div {
+      transition: all var(--animation-duration-medium) var(--animation-timing-function);
+    }
+    div {
+      transition: all var(--animation-duration-long) var(--animation-timing-function);
+    } */
+  }
+
+  /* ====================== Компоненты ======================== */
+  /* @layer components {
+    .btn:hover .btn__line,
+    .btn:hover .btn__icon {
+      opacity: 1;
+    }
+    .card-logo-text-1:hover {
+      background-color: var(--color-card-hover);
+    }
+    .card-logo-text-1:hover .card-logo-text-1__icon,
+    .card-logo-text-1:hover .badge {
+      opacity: 1;
+    }
+  } */
+
+  /* ====================== Утилитарные ======================== */
+  @layer utilities {
+    /*  ======= Структура ======= */
+
+    /* -------------------------------------------------------------------------------------- */
+
+    /* Если нет утилитарной дизайн-системы, используется локальный нейминг */
+    /* .section-collection {} */
+
+    /* Модификаторы для индивидуальной настрйоки */
+    /* .c-section--collection {} */
+
+    /* -------------------------------------------------------------------------------------- */
+
+    /* Для Taptop без ширины */
+    .full-screen {
+      /* Fallback для старых браузеров */
+      height: 100vh;
+
+      /* Для современных браузеров */
+      height: 100dvh;
+
+      /* Для Safari */
+      /* height: -webkit-fill-available; */
+    }
+
+    @supports (-webkit-touch-callout: none) {
+      .full-screen {
+        height: -webkit-fill-available;
+      }
+    }
+
+    /* ========== Видимость элементов ========== */
+    /* Добавляется кодом в embed, чтобы перебить другие классы */
+    /* [+] */
+    .show-laptop {
+      display: flex !important;
+    }
+    .show-tablet {
+      display: none !important;
+    }
+    .show-mobile {
+      display: none !important;
+    }
+    .show-laptop-tablet {
+      display: flex !important;
+    }
+    .show-laptop-mobile {
+      display: flex !important;
+    }
+    .show-tablet-mobile {
+      display: none !important;
+    }
+    /* [+] */
+    @media screen and (max-width: 991px) {
+      .show-laptop {
+        display: none !important;
+      }
+      .show-tablet {
+        display: flex !important;
+      }
+      .show-mobile {
+        display: none !important;
+      }
+      .show-laptop-tablet {
+        display: flex !important;
+      }
+      .show-laptop-mobile {
+        display: none !important;
+      }
+      .show-tablet-mobile {
+        display: flex !important;
+      }
+    }
+    /* [+] */
+    @media screen and (max-width: 479px) {
+      .show-laptop {
+        display: none !important;
+      }
+      .show-tablet {
+        display: none !important;
+      }
+      .show-mobile {
+        display: flex !important;
+      }
+      .show-laptop-tablet {
+        display: none !important;
+      }
+      .show-laptop-mobile {
+        display: flex !important;
+      }
+      .show-tablet-mobile {
+        display: flex !important;
+      }
+    }
+
+    /* Контейнеры */
+    /* [+] */
+    .cont {
+      padding-left: 3rem !important;
+      padding-right: 3rem !important;
+    }
+    .cont--no-paddings {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+    /* [+] */
+    @media screen and (max-width: 991px) {
+      /* .cont {
+        padding: 0 3rem !important;
+      } */
+      .cont-tablet-mobile {
+        padding-left: 3rem !important;
+        padding-right: 3rem !important;
+      }
+      .cont--no-paddings-tablet-mobile {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+    }
+    /* [+] */
+    @media screen and (max-width: 479px) {
+      .cont {
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+      }
+      .cont-mobile {
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+      }
+      .cont-tablet-mobile {
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+      }
+      .cont--no-paddings-mobile {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+      .cont--no-paddings-tablet-mobile {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+    }
+
+    /* -------------------------------------------------------------------------------------- */
+
+    /* [+] Колонка с бордерами справа для направляющих */
+    .grid-guides .grid-guides__column:not(:last-child) {
+      border-right: var(--size-line) solid var(--color-grid-guids);
+    }
+    /* [+] Колонка с бордерами слева для направляющих */
+    .grid-guides .grid-guides__column:not(:first-child) {
+      border-left: var(--size-line) solid var(--color-grid-guids);
+    }
+
+    /* -------------------------------------------------------------------------------------- */
+
+    /* Тэг img для Taptop */
+    /* [+] */
+    .img-full svg,
+    .img-full img {
+      display: block;
+      height: 100%;
+      min-height: 0;
+      width: 100%;
+      /* Для svg */
+      overflow: visible !important;
+    }
+
+    /* -------------------------------------------------------------------------------------- */
+
+    /* Слой на фоне */
+    /* Для фоновых элементов или картинок */
+    /* [-] */
+    .layer-background {
+      object-fit: cover;
+    }
+    /* [+] */
+    /* Тэг img для Taptop */
+    .layer-background img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  /* ====================== Помощь ======================== */
+  @layer help {
+    /* [+] */
+    /* В Taptop нельзя выставить стиль для картинки */
+    .pixel-perfect__img img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  /* -------------------------------------------------------------------------------------- */
+
+  /* Предпочтение уменьшенного движения */
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0ms !important;
+      transition-duration: 0ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  .tb:hover .body,
+  .btn:hover .btn__line,
+  .btn:hover .btn__icon {
+    opacity: 1;
+  }
+  .btn-text-border-white:hover,
+  .header__btn:hover .btn__text,
+  .menu__link:hover .btn__text {
+    opacity: .45;
+  }
+  .card-logo-text-1 {
+    cursor: default;
+  }
+  /* .card-logo-text-1:hover {
+    background-color: var(--color-card-hover);
+  }
+  .card-logo-text-1:hover .card-logo-text-1__icon,
+  .card-logo-text-1:hover .badge {
+    opacity: 1;
+  } */
+  .main-faq__item {
+    border-top: var(--size-line) solid var(--color-stroke);
+  }
+  .main-faq__item:last-child {
+    border-bottom: var(--size-line) solid var(--color-stroke);
+  }
+  .form_checkbox {
+    transition: transform var(--animation-duration-short) var(--animation-timing-function);
+  }
+  .form__widget-item:has(:checked) .form_checkbox {
+    /* background-color: var(--color-white); */
+    background-image: url(/d/check.svg) !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+    border-color: var(--color-base);
+  }
+  .dark-theme .form__widget-item:has(:checked) .form_checkbox {
+    /* background-color: var(--color-white); */
+    background-image: url(/d/check-black.svg) !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: scroll;
+    background-repeat: no-repeat;
+    border-color: var(--color-base);
+  }
+  /* .form_input::placeholder {
+    color: var(--color-white);
+  } */
+  .header__inner,
+  .header__btn,
+  .btn-iconic-blur {
+    -webkit-backdrop-filter: var(--blur);
+  }
+  .footer .lnk:hover {
+    opacity: 1;
+  }
+
+  .service-cost__card--dark-theme {
+    --color-base: rgb(255, 255, 255);
+    --color-base-20: rgba(255, 255, 255, 0.2);
+    --color-alternate: rgb(10, 10, 10);
+    border: 0;
+    background-size: cover;
+    background-image: url(/d/service-cost.svg);
+    background-repeat: no-repeat;
+    background-position: left 0% bottom 0%;
+    background-attachment: scroll;
+  }
+
+  @media screen and (min-width: 992px) {
+    .service-cover__link:hover .body,
+    .service-cover__link:hover .decor-line--service-bottom {
+      opacity: 1;
+    }
+    .service-cover__link:hover .service-cover__link-icon {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .card-img-text-6:hover,
+    .card-img-text-4:hover {
+      background-color: var(--color-card-hover);
+    }
+    /* Настройки страницы */
+    /* .card-img-text-4__top {
+      opacity: 0;
+    } */
+    .card-img-text-4:hover .card-img-text-4__icon,
+    .card-img-text-4:hover .card-img-text-4__top {
+      opacity: 1;
+    }
+
+    .card-img-text-4:hover .card-img-text-4__bottom .caption {
+      opacity: 0;
+    }
+    .btn-text-border-grey:hover {
+      border-color: var(--color-white);
+    }
+    .btn-text-border-grey:hover .body {
+      font-weight: 500;
+      opacity: 1;
+    }
+  }
+  /* Table */
+  .product-page-section__cell-inner:last-child {
+    border-right: 0 !important;
+  }
+  .product-page-section__cell-body:last-child {
+    border-bottom: 0 !important;
+  }
+  @media screen and (max-width: 479px) {
+    .product-page-section__img img {
+      width: auto;
+      height: auto;
+      max-width: none;
+    }
+  }
+  .checkbox__inner a {
+    color: inherit;
+  }
+  .body a {
+    color: inherit;
+  }
+  re-captcha {
+    display: none;
+  }
+</style>
+
+<style>
+  /* Глобальная стилизация скроллбара для WebKit браузеров (Chrome, Safari, Edge) */
+  ::-webkit-scrollbar {
+    width: 5px; /* Для вертикального скроллбара */
+    height: 5px; /* Для горизонтального скроллбара */
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #141414;
+    /* border-radius: 0.1rem; */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #6c6c6c;
+    /* border-radius: 0.1rem; */
+    transition: background-color var(--animation-duration-fast) var(--animation-timing-function);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #8a8a8a;
+  }
+
+  ::-webkit-scrollbar-thumb:active {
+    background-color: #9e9e9e;
+  }
+
+  ::-webkit-scrollbar-corner {
+    background-color: #141414;
+  }
+
+  /* Глобальная стилизация для Firefox */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: #6c6c6c #141414;
+  }
+
+  /* Глобальная стилизация для старых версий Edge и IE */
+  body {
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+
+  /* Стилизация скроллбара для текстовых областей */
+  textarea::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  textarea::-webkit-scrollbar-track {
+    background-color: #141414;
+    /* border-radius: 0.1rem; */
+  }
+
+  textarea::-webkit-scrollbar-thumb {
+    background-color: #6c6c6c;
+    /* border-radius: 0.1rem; */
+  }
+
+  /* Стилизация для элементов с переполнением */
+  [style*="overflow: auto"]::-webkit-scrollbar,
+  [style*="overflow: scroll"]::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  /* Дополнительные улучшения для доступности */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      transition: none;
+    }
+  }
+
+  /* Для устройств с тонкими указателями (мобильные) */
+  @media (pointer: coarse) and (hover: none) {
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+  }
+
+  /* Поддержка темной/светлой темы (опционально) */
+  @media (prefers-color-scheme: light) {
+    :root {
+      scrollbar-color: #6c6c6c #f0f0f0;
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: #f0f0f0;
+    }
+  }
+
+  /* Гарантия применения стилей ко всем элементам */
+  * {
+    scrollbar-width: inherit;
+    scrollbar-color: inherit;
+  }
+</style>
