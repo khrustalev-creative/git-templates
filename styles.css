@@ -1,0 +1,939 @@
+/* ============================================================================================================================================================================== */
+/* СБРОСЫ ======================================================================================================================================================================= */
+/* ============================================================================================================================================================================== */
+
+/* Отступы браузера, Таптоп сброшено*/
+/* html,
+body {
+  margin: 0;
+  padding: 0;
+} */
+
+/* -------------------------------------------------------------------------------------- */
+
+/* Параграфы Taptop */
+p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+/* -------------------------------------------------------------------------------------- */
+
+/* Ссылки и кнопки по умолчанию */
+a,
+button {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* -------------------------------------------------------------------------------------- */
+
+/* Цвет области при нажатии на сенсоре */
+a,
+button,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
+}
+
+/* -------------------------------------------------------------------------------------- */
+
+/* Предпочтение уменьшенного движения */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0ms !important;
+    transition-duration: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* -------------------------------------------------------------------------------------- */
+
+/* Убрать лишние элементы таптопа */
+re-captcha {
+  display: none !important;
+}
+
+/* ============================================================================================================================================================================== */
+/* НАСТРОЙКИ ======================================================================================================================================================================= */
+/* ============================================================================================================================================================================== */
+
+/* БРЕЙКПОИНТЫ ====================================================================================================================================================== */
+:root {
+  /* Задаются здесь и используются по всему проекту в скриптах */
+  /* В медиа-запросах в css не поддерживается такой подход, нужно выставялть отдельно в каждом медиа-запросе */
+  /* В этом файле find and replace, чтобы быстро поменять */
+  --breakpoint-laptop: 992;
+  --breakpoint-tablet: 991;
+  --breakpoint-mobile: 479;
+}
+
+/* ЦВЕТ ====================================================================================================================================================== */
+:root {
+  /* ОСНОВНАЯ ТЕМА =========================================================================== */
+  /* Для проекта */
+  /* Меняются при смене темы */
+  --color-base: #191919; /* Цвет текста и основных элементов */
+  --color-alternate: #ffffff; /* Цвет фона */
+
+  /* Не меняются при изменении темы, задается для основной темы */
+  --color-accent: #1f31f1; /* Акцентный цвет */
+  --color-base-static: #191919; /* Цвет текста и основных элементов */
+  --color-alternate-static: #ffffff; /* Цвет фона */
+
+  --color-success: #5af064; /* Состояние успеха */
+  --color-warning: #e9d357; /* Предупреждение */
+  --color-error: #ef5d5d; /* Состояние ошибки */
+
+  --opacity-light: 0.1;
+  --opacity-medium: 0.5;
+  --opacity-dark: 0.7;
+
+  /* Для Style Guide */
+  --color-base-contrast: #232323; /* Более светлый оттенок черного */
+  --color-alternate-contrast: #f5f5f5; /* Более темный оттенок белого */
+  --color-styleguide-grey-dark: #aaaaaa; /* Обводка для примера */
+  --color-styleguide-grey-medium: #e2e2e2; /* Обводка для примера */
+  --color-styleguide-blue: #3545f8; /* Акцентный синий цвет, для тэга "class" */
+  --color-styleguide-blue-text: #3545f8; /* Акцентный синий цвет, для тэга "class" */
+  --color-styleguide-blue-light: rgba(31, 49, 241, 0.2); /* Светлый оттенок синего для тэга "var" */
+  --color-styleguide-red: #ff0000; /* Цвет направляющих сетки */
+  --color-styleguide-red-text: #ff0000; /* Цвет направляющих сетки */
+  --color-styleguide-red-light: rgba(255, 0, 0, 0.2); /* Цвет направляющих сетки */
+  --color-styleguide-magenta: #e610b6; /* Акцентный малиновый цвет, для тэга "tag" */
+  --color-styleguide-purple: #5a27f4; /* Акцентный сереневый цвет, для тэга "var" */
+}
+
+/* АЛЬТЕРНАТИВНАЯ ТЕМА =========================================================================== */
+.alt-theme {
+  /* Для проекта */
+  --color-base: #ffffff;
+  --color-alternate: #191919;
+
+  /* Для Style Guide */
+  --color-base-contrast: #f5f5f5;
+  --color-alternate-contrast: #232323;
+  --color-styleguide-blue-text: #616eff; /* Акцентный синий цвет, для тэга "class" */
+}
+/* Предотвращаем мерцание при загрузке темы */
+.alt-theme-init {
+  visibility: hidden;
+}
+
+/* ВЫДЕЛЕННЫЙ ТЕКСТ =========================================================================== */
+.highlighted-text span span {
+  color: var(--color-accent) !important;
+}
+
+/* СИСТЕМА РАЗМЕРОВ ====================================================================================================================================================== */
+/* Переменные для размеров только если есть дизайн-система */
+/* Десктоп */
+@media screen and (min-width: 992px) {
+  :root {
+    --size-line: 1px;
+    --size-3xs: 0.2rem;
+    --size-xxs: 0.4rem;
+    --size-xs: 0.8rem;
+    --size-xss: 1.2rem;
+    --size-s: 1.6rem;
+    --size-sm: 2rem;
+    --size-m: 2.4rem;
+    --size-ml: 3.2rem;
+    --size-l: 4rem;
+    --size-lxl: 4.8rem;
+    --size-xl: 5.6rem;
+    --size-xlxxl: 6.4rem;
+    --size-xxl: 7.2rem;
+    --size-3xl: 8rem;
+    --size-4xl: 9rem;
+    --size-5xl: 10rem;
+    --size-6xl: 11rem;
+    --size-7xl: 12rem;
+    --size-8xl: 13rem;
+    --size-9xl: 14rem;
+    --size-10xl: 15rem;
+
+    /* СКРУГЛЕНИЕ =========================================================================== */
+    --radius: 0.6rem;
+  }
+}
+/* Планшет */
+@media screen and (min-width: 480px) and (max-width: 991px) {
+  :root {
+    --size-line: 1px;
+    --size-3xs: 0.2rem;
+    --size-xxs: 0.4rem;
+    --size-xs: 0.8rem;
+    --size-xss: 1.2rem;
+    --size-s: 1.6rem;
+    --size-sm: 2rem;
+    --size-m: 2.4rem;
+    --size-ml: 3.2rem;
+    --size-l: 4rem;
+    --size-lxl: 4.8rem;
+    --size-xl: 5.6rem;
+    --size-xlxxl: 6.4rem;
+    --size-xxl: 7.2rem;
+    --size-3xl: 8rem;
+    --size-4xl: 9rem;
+    --size-5xl: 10rem;
+    --size-6xl: 11rem;
+    --size-7xl: 12rem;
+    --size-8xl: 13rem;
+    --size-9xl: 14rem;
+    --size-10xl: 15rem;
+
+    /* СКРУГЛЕНИЕ =========================================================================== */
+    --radius: 0.6rem;
+  }
+}
+/* Мобилка */
+@media screen and (max-width: 479px) {
+  :root {
+    --size-line: 1px;
+    --size-3xs: 0.2rem;
+    --size-xxs: 0.4rem;
+    --size-xs: 0.8rem;
+    --size-xss: 1.2rem;
+    --size-s: 1.6rem;
+    --size-sm: 2rem;
+    --size-m: 2.4rem;
+    --size-ml: 3.2rem;
+    --size-l: 4rem;
+    --size-lxl: 4.8rem;
+    --size-xl: 5.6rem;
+    --size-xlxxl: 6.4rem;
+    --size-xxl: 7.2rem;
+    --size-3xl: 8rem;
+    --size-4xl: 9rem;
+    --size-5xl: 10rem;
+    --size-6xl: 11rem;
+    --size-7xl: 12rem;
+    --size-8xl: 13rem;
+    --size-9xl: 14rem;
+    --size-10xl: 15rem;
+
+    /* СКРУГЛЕНИЕ =========================================================================== */
+    --radius: 0.6rem;
+  }
+}
+
+/* ============================================================================================================================================================================== */
+/* ТИПОГРАФИКА ======================================================================================================================================================================= */
+/* ============================================================================================================================================================================== */
+
+/* БАЗОВЫЙ РАЗМЕР ШРИФТА ====================================================================================================================================================== */
+/* Меняется или убирается, в зависимости от метода адаптивности */
+/* 1rem = 62.5% = 10px */
+
+/* :root {
+  font-size: 62.5%;
+} */
+
+/* АДАПТИВНОСТЬ =========================================================================== */
+/* Подставляется метод */
+
+/* Десктоп */
+@media screen and (min-width: 992px) {
+  html {
+    /* font-size: 0.733vw; */
+    font-size: 0.625vw; /* Фикс, берется немного меньше 10px, если большие элементы */
+  }
+}
+
+/* Планшет */
+@media screen and (min-width: 480px) and (max-width: 991px) {
+  html {
+    font-size: 1.3vw;
+  }
+}
+
+/* Мобилка */
+@media screen and (max-width: 479px) {
+  html {
+    font-size: 2.66vw;
+  }
+}
+
+/* КАЧЕСТВО И ЧИТАБИЛЬНОСТЬ ШРИФТА =========================================================================== */
+html {
+  /* Стандартное сглаживание */
+  text-rendering: optimizeLegibility;
+  /* WebKit браузеры (Chrome, Safari) */
+  -webkit-font-smoothing: antialiased;
+  /* Firefox */
+  -moz-osx-font-smoothing: grayscale;
+  /* Будущее свойство */
+  font-smooth: always;
+  /* Оптимизация производительности */
+  shape-rendering: geometricPrecision;
+  /* Улучшение читаемости */
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures;
+  font-feature-settings: "kern", "liga", "clig", "calt";
+}
+
+/* РАЗМЕР / МЕЖБУКВЕННОЕ РАССТОЯНИЕ / МЕЖСТРОЧНОЕ РАССТОЯНИЕ И ТД ====================================================================================================================================================== */
+/* Переменные для шрифтов только если есть дизайн-система */
+
+/* АНИМАЦИИ ====================================================================================================================================================== */
+:root {
+  /* Кривая ускорения */
+  /* --animation-timing-function: cubic-bezier(0.32, 0.72, 0, 1); */
+  /* --animation-timing-function: cubic-bezier(0.85, 0.01, 0.04, 1); */
+  /* --animation-timing-function: cubic-bezier(0.58, 0, 0.43, 1); */
+  /* --animation-timing-function: cubic-bezier(0.25, 1, 0.5, 1); */
+  /* --animation-timing-function: cubic-bezier(0.625, 0.05, 0, 1); */
+  --animation-timing-function: cubic-bezier(0.3, 0.7, 0.05, 1);
+
+  /* -------------------------------------------------------------------------------------- */
+
+  /* Длительность анимаций */
+  --animation-duration-fast: 200ms;
+  --animation-duration-medium: 400ms;
+  --animation-duration-slow: 800ms;
+  --animation-duration-super-slow: 1300ms;
+
+  /* -------------------------------------------------------------------------------------- */
+
+  /* Для бегущей строки */
+  --animation-marquee: 20s infinite linear;
+}
+
+/* НАСТРОЙКИ =========================================================================== */
+
+/* Предотвращение дерганий при открытии попапов */
+html {
+  scrollbar-gutter: stable;
+  /* Нативная плавная прокрутка */
+  /* В редакторе Taptop не работает прокрутка с плавностью */
+  /* scroll-behavior: smooth; */
+  background-color: var(--color-base);
+}
+
+/* ============================================================================================================================================================================== */
+/* ЭФФЕКТЫ ======================================================================================================================================================================= */
+/* ============================================================================================================================================================================== */
+
+/* РАЗМЫТИЕ ТЕНИ ====================================================================================================================================================== */
+:root {
+  --shadow-blur: 1rem;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* РАЗМЫТИЕ ====================================================================================================================================================== */
+:root {
+  --blur: 0.5rem;
+}
+
+.blur {
+  -webkit-filter: blur(var(--blur)); /* для Safari */
+}
+
+/* РАЗМЫТИЕ НА ФОНЕ ====================================================================================================================================================== */
+:root {
+  --backdrop-blur: 0.5rem;
+}
+
+.backdrop-blur {
+  -webkit-backdrop-filter: blur(var(--blur)); /* для Safari */
+}
+
+/* РАЗМЕРЫ ИЗОБРАЖЕНИЙ И БЛОКОВ ======================================================================================================================================================================= */
+
+/* На всю ширину и высоту */
+.icon svg,
+.icon img,
+.media-full,
+.media-full svg,
+.media-full img {
+  min-height: 0;
+  height: 100%;
+  width: 100%;
+}
+
+/* На всю ширину и авто высотой для сохранения пропорционалности */
+.media-width-auto,
+.media-width-auto svg,
+.media-width-auto img {
+  height: 100%;
+  width: auto;
+}
+
+/* На всю высота и авто высотой для сохранения пропорционалности */
+.media-height-auto svg,
+.media-height-auto img {
+  height: auto;
+  width: 100%;
+}
+
+/* Для webflow вредно */
+svg {
+  overflow: visible !important;
+}
+
+/* Для фоновых элементов или картинок */
+/* В Таптоп нельзя задать object-fit в кастом пропс */
+.layer-background {
+  object-fit: cover;
+}
+
+/* ВЫСОТА ХЕДЕРА =========================================================================== */
+/* Для подставления в отступы секций и в скрипты, чтобы всегда учитывался точный размер */
+
+@media screen and (min-width: 992px) {
+  :root {
+    /* Дефолтное значение для десктопа */
+    --header-height: 6rem; /* высота шапки */
+    --header-footer: 5rem; /* высота нижней панели мобильного меню */
+  }
+}
+
+/* Планшет */
+@media screen and (min-width: 480px) and (max-width: 991px) {
+  :root {
+    --header-height: 6rem;
+    --header-footer: 5rem;
+  }
+}
+
+/* Мобилка */
+@media screen and (max-width: 479px) {
+  :root {
+    --header-height: 6rem;
+    --header-footer: 5rem;
+  }
+}
+
+/* ========================================================================================================================================================================== */
+/* УТИЛИТАРНЫЕ КЛАССЫ ======================================================================================================================================================= */
+/* ========================================================================================================================================================================== */
+
+/* ВИДИМОСТЬ ЭЛЕМЕНТОВ =========================================================================== */
+/* Работает в связке со скриптом, который при загрузке страницы удаляет элементы */
+/* Добавлять брейкпоинты в зависимости от метода адаптивности */
+/* .show-laptop,
+.show-tablet,
+.show-mobile,
+.show-laptop-tablet,
+.show-laptop-mobile,
+.show-tablet-mobile */
+
+/* ========================================================================================================================================================================== */
+/* ВСПОМОГАТЕЛЬНЫЕ СТИЛИ ======================================================================================================================================================= */
+/* ========================================================================================================================================================================== */
+
+/* [+] Колонка с бордерами справа для направляющих */
+.grid-guides .grid-guides__column:not(:last-child) {
+  border-right: var(--size-line) solid var(--color-styleguide-red);
+}
+/* [+] Колонка с бордерами слева для направляющих */
+.grid-guides .grid-guides__column:not(:first-child) {
+  border-left: var(--size-line) solid var(--color-styleguide-red);
+}
+
+/* Для Pixel Perfect */
+/* В Taptop нельзя выставить стиль для картинки */
+.pixel-perfect__img img {
+  width: 100%;
+  height: auto;
+}
+
+.styleguide__icon img,
+.styleguide__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* В редакторе Taptop нельзя задать стили для пустых блоков, у них есть padding, который мешает */
+.mosaic-wrap.mosaic-wrap--show_empty_mode .div:empty::after,
+.mosaic-wrap .blocklist__list:empty::after,
+.mosaic-wrap .list:empty::after,
+.mosaic-wrap.mosaic-wrap--show_empty_mode .mosaic-ani-tabs__item:empty::after,
+.mosaic-wrap.mosaic-wrap--show_empty_mode .mosaic-ani-tabs__content:empty::after,
+.mosaic-wrap.mosaic-wrap--show_empty_mode .section:empty::after,
+.mosaic-wrap.mosaic-wrap--show_empty_mode .column:empty::after,
+.mosaic-wrap.mosaic-wrap--show_empty_mode .link-lp:empty::after,
+.mosaic-wrap.mosaic-wrap--show_empty_mode .container:empty::after,
+.mosaic-wrap.mosaic-wrap--show_empty_mode .link-universal:empty::after,
+.mosaic-wrap.mosaic-wrap--show_empty_mode .link-button:empty::after,
+.mosaic-wrap.mosaic-wrap--show_empty_mode .link-block:empty::after,
+.mosaic-wrap.mosaic-wrap--show_empty_mode .form__state-default:empty::after {
+  padding: 0;
+}
+
+/* Для переключателя темной темы */
+.toggle-button:before {
+  transition: transform var(--animation-duration-fast) var(--animation-timing-function);
+}
+
+/* ========================================================================================================================================================================== */
+/* КОМПОНЕНТЫ ДЛЯ ПРОЕКТА ======================================================================================================================================================= */
+/* ========================================================================================================================================================================== */
+
+/* ПЛАВНОСТЬ ПРЕРЕХОДОВ =========================================================================== */
+/* Все элементы с переходами стакаются здесь */
+
+/* Плавная смена темы */
+* {
+  transition: background var(--animation-duration-fast) var(--animation-timing-function),
+    background-color var(--animation-duration-fast) var(--animation-timing-function);
+}
+/* * {
+  transition: color var(--animation-duration-fast) var(--animation-timing-function),
+    background-color var(--animation-duration-fast) var(--animation-timing-function),
+    border-color var(--animation-duration-fast) var(--animation-timing-function);
+} */
+
+/* Группа для быстрых переходов */
+.styleguide__nav-link,
+.toggle-button:before {
+  transition: all var(--animation-duration-fast) var(--animation-timing-function);
+}
+/* Группа для средних переходов */
+/* {
+  transition: all var(--animation-duration-medium) var(--animation-timing-function);
+} */
+
+/* Группа для меленных переходов */
+
+/* НАВЕДЕНИЕ ЭЛЕМЕНТОВ =========================================================================== */
+
+/* Ноутбук и выше (min-width: 992px) */
+@media screen and (min-width: calc(var(--breakpoint-laptop) * 1px)) {
+}
+
+/* !!! СКРОЛЛБАР =========================================================================== */
+/* Глобальная стилизация скроллбара для WebKit браузеров (Chrome, Safari, Edge) */
+
+/* Firefox + Chrome --------------------------------------------------------- */
+html {
+  /* scrollbar-width: thin;
+  scrollbar-color: var(--color-base-contrast) var(--color-neutral); */
+}
+
+/* Safari + Chrome --------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Фон */
+::-webkit-scrollbar-track {
+  background-color: var(--color-alternate-contrast);
+}
+
+/* Кнопка-ползунок */
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-styleguide-grey-dark);
+  border-radius: 0.1rem;
+}
+
+/* Кнопка-ползунок наведение */
+::-webkit-scrollbar-thumb:hover {
+  /* background-color: var(--color-alternate); */
+}
+
+/* Кнопка-ползунок зажатый */
+::-webkit-scrollbar-thumb:active {
+  /* background-color: var(--color-alternate); */
+}
+
+::-webkit-scrollbar-corner {
+  /* background-color: #ff2424; */
+}
+
+/* Стилизация скроллбара для текстовых областей */
+textarea::-webkit-scrollbar {
+  /* width: 50px;
+  height: 50px; */
+}
+
+textarea::-webkit-scrollbar-track {
+  /* background-color: #141414; */
+  /* border-radius: 0.1rem; */
+}
+
+textarea::-webkit-scrollbar-thumb {
+  /* background-color: #6c6c6c; */
+  /* border-radius: 0.1rem; */
+}
+
+/* Стилизация для элементов с переполнением */
+/* [style*="overflow: auto"]::-webkit-scrollbar,
+[style*="overflow: scroll"]::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+} */
+
+/* Дополнительные улучшения для доступности */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    transition: none;
+  }
+}
+
+/* Для устройств с тонкими указателями (мобильные) */
+@media (pointer: coarse) and (hover: none) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+/* Поддержка темной/светлой темы (опционально) */
+@media (prefers-color-scheme: light) {
+  :root {
+    scrollbar-color: #6c6c6c #f0f0f0;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+  }
+}
+
+/* Гарантия применения стилей ко всем элементам */
+* {
+  scrollbar-width: inherit;
+  scrollbar-color: inherit;
+}
+
+/* ПЕРЕКЛЮЧЕНИЕ ТЕМНОЙ ТЕМЫ =========================================================================== */
+.toggle-button:before {
+  content: "";
+  position: absolute;
+  height: 2.4rem;
+  width: 2.4rem;
+  border-radius: 100rem;
+  top: 0.2rem;
+  left: 0.2rem;
+  bottom: 0;
+  background-color: var(--color-base);
+}
+
+.toggle-button:checked:before {
+  left: auto;
+  transform: translate(100%);
+  background-color: var(--color-base);
+}
+
+/* RICH-TEXT =========================================================================== */
+.rich-text {
+  width: 100%;
+  /* max-width: 60rem; */
+}
+
+.rich-text blockquote {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 2rem;
+  margin-inline-end: 2rem;
+  border-left: var(--size-xxs) solid var(--color-accent);
+  padding: 1rem 2rem;
+}
+
+.tt-rich-code-block {
+  margin-block: 0em 0em;
+  padding: var(--size-m);
+  border-radius: var(--radius);
+  color: var(--color-base);
+  background-color: var(--color-alternate);
+}
+
+.rich-text h1,
+.rich-text h2,
+.rich-text h3,
+.rich-text h4,
+.rich-text h5,
+.rich-text h6 {
+  margin-top: 6rem;
+  margin-bottom: 3rem;
+}
+
+.rich-text p + p {
+  margin-top: 2rem;
+}
+
+.rich-text p + figure {
+  margin-top: 2rem;
+}
+
+.rich-text figure + p {
+  margin-top: 2rem;
+}
+
+.rich-text ul + p,
+.rich-text ol + p {
+  margin-top: 1rem;
+}
+
+.rich-text ul + figure,
+.rich-text ol + figure {
+  margin-top: 1rem;
+}
+
+.rich-text ul + ul,
+.rich-text ol + ol {
+  margin-top: 1rem;
+}
+
+.rich-text blockquote + p {
+  margin-top: 3rem;
+}
+
+.rich-text p + blockquote {
+  margin-top: 2rem;
+}
+
+.rich-text blockquote + figure {
+  margin-top: 2rem;
+}
+
+.rich-text figure + blockquote {
+  margin-top: 2rem;
+}
+
+.rich-text blockquote + blockquote {
+  margin-top: 1rem;
+}
+
+.rich-text h1:first-child,
+.rich-text h2:first-child,
+.rich-text h3:first-child,
+.rich-text h4:first-child,
+.rich-text h5:first-child,
+.rich-text h6:first-child,
+.rich-text p:first-child,
+.rich-text blockquote:first-child,
+.rich-text ul:first-child,
+.rich-text ol:first-child,
+.rich-text figure:first-child {
+  margin-top: 0;
+}
+
+@media screen and (max-width: 991px) {
+  .rich-text {
+    width: 100%;
+    /* max-width: 60rem; */
+  }
+
+  .rich-text blockquote {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 2rem;
+    margin-inline-end: 2rem;
+    border-left: var(--size-xxs) solid var(--color-accent);
+    padding: 1rem 2rem;
+  }
+
+  .rich-text h1,
+  .rich-text h2,
+  .rich-text h3,
+  .rich-text h4,
+  .rich-text h5,
+  .rich-text h6 {
+    margin-top: 6rem;
+    margin-bottom: 3rem;
+  }
+
+  .rich-text p + p {
+    margin-top: 2rem;
+  }
+
+  .rich-text p + figure {
+    margin-top: 2rem;
+  }
+
+  .rich-text figure + p {
+    margin-top: 2rem;
+  }
+
+  .rich-text ul + p,
+  .rich-text ol + p {
+    margin-top: 1rem;
+  }
+
+  .rich-text ul + figure,
+  .rich-text ol + figure {
+    margin-top: 1rem;
+  }
+
+  .rich-text ul + ul,
+  .rich-text ol + ol {
+    margin-top: 1rem;
+  }
+
+  .rich-text blockquote + p {
+    margin-top: 3rem;
+  }
+
+  .rich-text p + blockquote {
+    margin-top: 2rem;
+  }
+
+  .rich-text blockquote + figure {
+    margin-top: 2rem;
+  }
+
+  .rich-text figure + blockquote {
+    margin-top: 2rem;
+  }
+
+  .rich-text blockquote + blockquote {
+    margin-top: 1rem;
+  }
+  .rich-text h1:first-child,
+  .rich-text h2:first-child,
+  .rich-text h3:first-child,
+  .rich-text h4:first-child,
+  .rich-text h5:first-child,
+  .rich-text h6:first-child,
+  .rich-text p:first-child,
+  .rich-text blockquote:first-child,
+  .rich-text ul:first-child,
+  .rich-text ol:first-child,
+  .rich-text figure:first-child {
+    margin-top: 0;
+  }
+}
+
+@media screen and (max-width: 479px) {
+  .rich-text {
+    width: 100%;
+    /* max-width: 60rem; */
+  }
+
+  .rich-text blockquote {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    margin-inline-start: 2rem;
+    margin-inline-end: 2rem;
+    border-left: var(--size-xxs) solid var(--color-accent);
+    padding: 1rem 2rem;
+  }
+
+  .rich-text h1,
+  .rich-text h2,
+  .rich-text h3,
+  .rich-text h4,
+  .rich-text h5,
+  .rich-text h6 {
+    margin-top: 6rem;
+    margin-bottom: 3rem;
+  }
+
+  .rich-text p + p {
+    margin-top: 2rem;
+  }
+
+  .rich-text p + figure {
+    margin-top: 2rem;
+  }
+
+  .rich-text figure + p {
+    margin-top: 2rem;
+  }
+
+  .rich-text ul + p,
+  .rich-text ol + p {
+    margin-top: 1rem;
+  }
+
+  .rich-text ul + figure,
+  .rich-text ol + figure {
+    margin-top: 1rem;
+  }
+
+  .rich-text ul + ul,
+  .rich-text ol + ol {
+    margin-top: 1rem;
+  }
+  .rich-text blockquote + p {
+    margin-top: 3rem;
+  }
+
+  .rich-text p + blockquote {
+    margin-top: 2rem;
+  }
+
+  .rich-text blockquote + figure {
+    margin-top: 2rem;
+  }
+
+  .rich-text figure + blockquote {
+    margin-top: 2rem;
+  }
+
+  .rich-text blockquote + blockquote {
+    margin-top: 1rem;
+  }
+
+  .rich-text h1:first-child,
+  .rich-text h2:first-child,
+  .rich-text h3:first-child,
+  .rich-text h4:first-child,
+  .rich-text h5:first-child,
+  .rich-text h6:first-child,
+  .rich-text p:first-child,
+  .rich-text blockquote:first-child,
+  .rich-text ul:first-child,
+  .rich-text ol:first-child,
+  .rich-text figure:first-child {
+    margin-top: 0;
+  }
+}
+
+/* ТРОЕТОЧИЕ ТЕКСТА =========================================================================== */
+
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* СБАЛАНСИРВОАННЫЙ ПЕРЕНОС =========================================================================== */
+
+.wrap-balance span {
+  text-wrap: balance;
+}
+
+/* ========================================================================================================================================================================== */
+/* КОМПОНЕНТЫ STYLE-GUIDE ======================================================================================================================================================= */
+/* ========================================================================================================================================================================== */
+
+.styleguide__nav-link:hover {
+  background-color: var(--color-alternate);
+}
+
+/* ========================================================================================================================================================================== */
+/* КОД В НАСТРОЙКИ ПРОЕКТА ======================================================================================================================================================= */
+/* ========================================================================================================================================================================== */
+
+/* Начальные состояния для анимаций, чтобы небыло мерцаний при загрузке страницы */
+/* Добавляется брейкпоинт, если нужно убрать из мобилки */
+/* Все состояния проставляются в редакторе, и добавляется класс edit для редактирования, который удаляется автоматически при загрузке саайта */
+/* @media screen and (min-width: 992px) {} */
+/* [title-split-instant],
+[slide-up-instant],
+[fade-in-instant],
+[title-split-scrub],
+[slide-up-scrub],
+[fade-in-scrub] {
+  opacity: 0;
+}
+
+[title-split-scrub] .line-inner,
+[title-split-instant] .line-inner {
+  transform: translateY(-110%) rotate(-2deg);
+} */
