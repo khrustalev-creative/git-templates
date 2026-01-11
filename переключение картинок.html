@@ -1,0 +1,846 @@
+<script>
+  // Image Changer - универсальный скрипт для переключения изображений
+  class ImageChanger {
+    constructor() {
+      this.cards = []
+      this.hasHover = window.matchMedia("(hover: hover)").matches
+      this.init()
+    }
+
+    init() {
+      const cardElements = document.querySelectorAll("[change-card]")
+
+      cardElements.forEach((card) => {
+        const instance = this.setupCard(card)
+        if (instance) this.cards.push(instance)
+      })
+    }
+
+    setupCard(card) {
+      const triggers = Array.from(card.querySelectorAll("[change-trigger]"))
+      const images = Array.from(card.querySelectorAll("[change-img]"))
+
+      if (!triggers.length || !images.length) {
+        console.warn("ImageChanger: Не найдены триггеры или изображения", card)
+        return null
+      }
+
+      if (triggers.length !== images.length) {
+        console.warn("ImageChanger: Несоответствие количества триггеров и изображений", card)
+      }
+
+      const preparedTriggers = triggers.map((trigger) => ({
+        element: trigger,
+        childElement: this.findActiveChild(trigger),
+      }))
+
+      const cardObj = {
+        element: card,
+        triggers: preparedTriggers,
+        images: images,
+        activeIndex: 0,
+      }
+
+      this.bindEvents(cardObj)
+      this.activateItem(cardObj, 0)
+
+      return cardObj
+    }
+
+    findActiveChild(trigger) {
+      const childElement = trigger.firstElementChild
+
+      if (!childElement) {
+        console.warn("ImageChanger: Нет дочернего элемента в триггере", trigger)
+        return null
+      }
+
+      const classList = childElement.className.split(" ").filter((c) => c.trim() !== "")
+
+      if (classList.length === 0) {
+        console.warn("ImageChanger: У дочернего элемента нет классов", childElement)
+        return null
+      }
+
+      const baseClass = classList.find((className) => !className.toLowerCase().includes("div"))
+
+      if (!baseClass) {
+        const firstClass = classList[0]
+        console.warn('ImageChanger: Все классы содержат "div", используется:', firstClass, childElement)
+        return {
+          element: childElement,
+          className: firstClass,
+          activeClass: `${firstClass}--active`,
+        }
+      }
+
+      return {
+        element: childElement,
+        className: baseClass,
+        activeClass: `${baseClass}--active`,
+      }
+    }
+
+    findImageBaseClass(image) {
+      const classList = image.className.split(" ").filter((c) => c.trim() !== "")
+
+      if (classList.length === 0) return null
+
+      // Ищем класс, который не содержит "div" и не содержит "image" (без учета регистра)
+      const baseClass = classList.find((className) => {
+        const lowerClassName = className.toLowerCase()
+        return !lowerClassName.includes("div") && !lowerClassName.includes("image")
+      })
+
+      if (!baseClass) {
+        // Если все классы содержат "div" или "image", используем первый класс
+        const firstClass = classList[0]
+        console.warn('ImageChanger: Все классы содержат "div" или "image", используется:', firstClass, image)
+        return {
+          baseClass: firstClass,
+          activeClass: `${firstClass}--active`,
+        }
+      }
+
+      return {
+        baseClass: baseClass,
+        activeClass: `${baseClass}--active`,
+      }
+    }
+
+    bindEvents(cardObj) {
+      cardObj.triggers.forEach((triggerData, index) => {
+        const trigger = triggerData.element
+
+        trigger.addEventListener("click", (e) => {
+          e.preventDefault()
+          this.handleTriggerClick(cardObj, index)
+        })
+
+        if (this.hasHover) {
+          trigger.addEventListener("mouseenter", () => {
+            this.handleTriggerHover(cardObj, index)
+          })
+        }
+      })
+    }
+
+    handleTriggerClick = (cardObj, index) => {
+      this.activateItem(cardObj, index)
+    }
+
+    handleTriggerHover = (cardObj, index) => {
+      this.activateItem(cardObj, index)
+    }
+
+    activateItem(cardObj, newIndex) {
+      if (newIndex === cardObj.activeIndex) return
+
+      const oldIndex = cardObj.activeIndex
+
+      this.toggleTrigger(cardObj.triggers[oldIndex], false)
+      this.toggleImage(cardObj.images[oldIndex], false)
+
+      this.toggleTrigger(cardObj.triggers[newIndex], true)
+      this.toggleImage(cardObj.images[newIndex], true)
+
+      cardObj.activeIndex = newIndex
+    }
+
+    toggleTrigger(triggerData, isActive) {
+      if (!triggerData) return
+
+      const trigger = triggerData.element
+      const childData = triggerData.childElement
+
+      if (childData) {
+        childData.element.classList.toggle(childData.activeClass, isActive)
+      }
+    }
+
+    toggleImage(image, isActive) {
+      const classData = this.findImageBaseClass(image)
+
+      if (classData) {
+        image.classList.toggle(classData.activeClass, isActive)
+      }
+    }
+
+    refresh() {
+      this.cards.forEach((card) => {
+        card.triggers.forEach((triggerData) => {
+          const trigger = triggerData.element
+          trigger.removeEventListener("click", this.handleTriggerClick)
+          trigger.removeEventListener("mouseenter", this.handleTriggerHover)
+        })
+      })
+
+      this.cards = []
+      this.hasHover = window.matchMedia("(hover: hover)").matches
+      this.init()
+    }
+
+    destroy() {
+      this.cards.forEach((card) => {
+        card.triggers.forEach((triggerData) => {
+          const trigger = triggerData.element
+          trigger.removeEventListener("click", this.handleTriggerClick)
+          trigger.removeEventListener("mouseenter", this.handleTriggerHover)
+
+          const childData = triggerData.childElement
+          if (childData) {
+            childData.element.classList.remove(childData.activeClass)
+          }
+        })
+
+        card.images.forEach((image) => {
+          const classData = this.findImageBaseClass(image)
+          if (classData) {
+            image.classList.remove(classData.activeClass)
+          }
+        })
+      })
+
+      this.cards = []
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    window.imageChanger = new ImageChanger()
+  })
+</script>
+
+<script>
+  // Ждем полной загрузки DOM
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch(`/-/x-api/v1/public/?method=mosaic/getCollectionItemCount&param[collection_id]=<collection_id>`)
+      .then((data) => data.json())
+      .then(console.log)
+    // Находим все элементы в коллекции с атрибутом [collection-itmes]
+    const projectElements = document.querySelectorAll("[collection-itmes]")
+
+    // Получаем количество элементов
+    const projectsCount = projectElements.length
+
+    // Находим все элементы для вывода количества [collection-counter]
+    const countElements = document.querySelectorAll("[collection-counter]")
+
+    countElements.forEach((element) => {
+      // Находим самый дочерний элемент
+      let deepestChild = element
+      while (deepestChild.lastElementChild) {
+        deepestChild = deepestChild.lastElementChild
+      }
+
+      // Обновляем textContent, добавляем количество проектов
+      if (deepestChild) {
+        deepestChild.textContent = projectsCount
+      }
+    })
+  })
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const collectionId = "552909"
+
+    fetch(`/-/x-api/v1/public/?method=mosaic/getCollectionItemCount&param[collection_id]=${collectionId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const projectsCount = data?.result?.count || 0
+        const countElements = document.querySelectorAll("[collection-counter]")
+
+        countElements.forEach((element) => {
+          let deepestChild = element
+          while (deepestChild.lastElementChild) {
+            deepestChild = deepestChild.lastElementChild
+          }
+          if (deepestChild) deepestChild.textContent = projectsCount
+        })
+      })
+  })
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch(`/-/x-api/v1/public/?method=mosaic/getCollectionItemCount&param[collection_id]=552909`)
+      .then((data) => data.json())
+      .then(console.log)
+  })
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    fetch(`/-/x-api/v1/public/?method=mosaic/getCollectionItemCount&param[collection_id]=552909`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Получаем количество из ответа {result: 8}
+        const projectsCount = data?.result || 0
+
+        // Находим все элементы для вывода количества [collection-counter]
+        const countElements = document.querySelectorAll("[collection-counter]")
+
+        countElements.forEach((element) => {
+          // Находим самый дочерний элемент
+          let deepestChild = element
+          while (deepestChild.lastElementChild) {
+            deepestChild = deepestChild.lastElementChild
+          }
+
+          // Обновляем textContent, добавляем количество объектов
+          if (deepestChild) {
+            deepestChild.textContent = projectsCount
+          }
+        })
+      })
+      .catch((error) => {
+        console.error("Ошибка при получении количества:", error)
+      })
+  })
+</script>
+
+<style>
+  .cover-video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+  }
+</style>
+
+<iframe
+  class="cover-video"
+  src="https://player.vimeo.com/video/1149276018?autoplay=1&loop=1&muted=1&background=1&controls=0&title=0&byline=0&portrait=0"
+  frameborder="0"
+  allow="autoplay; fullscreen"
+  allowfullscreen
+></iframe>
+<script src="https://player.vimeo.com/api/player.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+/**
+ * Video hover/click controller
+ * @module hoverVideoController
+ */
+class HoverVideoController {
+  constructor() {
+    this.wrappers = [];
+    this.currentPlayingVideo = null;
+    this.isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    // Используем обычный Map для кэширования классов
+    this.wrapperActiveClasses = new Map();
+    
+    // Текущий режим взаимодействия (hover или click)
+    this.interactionMode = 'hover'; // 'hover' или 'click'
+
+    // Для отслеживания user gesture на iOS
+    this.userGesturePerformed = false;
+
+    // Дебаунс для resize
+    this.resizeTimeout = null;
+
+    this.init();
+  }
+
+  init() {
+    this.refreshWrappers();
+    if (this.wrappers.length === 0) return;
+    
+    // Определяем начальный режим взаимодействия
+    this.updateInteractionMode();
+    
+    // Слушаем изменения размера окна
+    window.addEventListener('resize', this.handleResize.bind(this));
+    
+    // Отмечаем user gesture для iOS
+    this.setupUserGestureDetection();
+    
+    this.setupEventListeners();
+  }
+
+  // Обновляем список wrappers
+  refreshWrappers() {
+    this.wrappers = Array.from(document.querySelectorAll('[hover-video-wrapper]'));
+  }
+
+  setupUserGestureDetection() {
+    // На iOS требуется user gesture для воспроизведения видео
+    const gestureEvents = ['click', 'touchstart', 'touchend', 'keydown'];
+    gestureEvents.forEach(eventType => {
+      document.addEventListener(eventType, () => {
+        this.userGesturePerformed = true;
+      }, { once: true, passive: true });
+    });
+  }
+
+  handleResize() {
+    // Дебаунс resize
+    clearTimeout(this.resizeTimeout);
+    this.resizeTimeout = setTimeout(() => {
+      const oldMode = this.interactionMode;
+      this.updateInteractionMode();
+      
+      // Если режим изменился, переинициализируем слушатели событий
+      if (oldMode !== this.interactionMode) {
+        this.removeEventListeners();
+        this.setupEventListeners();
+      }
+    }, 250);
+  }
+
+  updateInteractionMode() {
+    const width = window.innerWidth;
+    // Если ширина экрана меньше 992px или это тач-устройство, используем механику клика
+    this.interactionMode = (width < 992 || this.isTouchDevice) ? 'click' : 'hover';
+  }
+
+  setupEventListeners() {
+    this.refreshWrappers(); // Обновляем список перед настройкой
+    
+    this.wrappers.forEach((wrapper, index) => {
+      const videoLink = wrapper.querySelector('[hover-video-link]');
+      if (!videoLink) return;
+
+      const source = this.getFullVideoSource(videoLink.textContent.trim());
+      let video = wrapper.querySelector('video');
+
+      // Создаём <video>, если его нет
+      if (!video) {
+        video = document.createElement('video');
+        video.muted = true;
+        video.playsInline = true;
+        video.disablePictureInPicture = true;
+        video.preload = 'metadata';
+        video.src = source;
+        wrapper.appendChild(video);
+      } else if (!video.dataset.hoverVideoLoaded) {
+        video.src = source;
+        video.dataset.hoverVideoLoaded = 'true';
+      }
+
+      // Сохраняем оригинальный постер
+      if (!video.dataset.originalPoster) {
+        video.dataset.originalPoster = video.poster || '';
+      }
+
+      // Сохраняем индекс в dataset
+      wrapper.dataset.hoverVideoIndex = index;
+
+      // Назначаем события в зависимости от режима
+      if (this.interactionMode === 'click') {
+        // Удаляем старые обработчики если есть
+        wrapper.removeEventListener('click', this.handleWrapperClick);
+        wrapper.removeEventListener('touchstart', this.handleWrapperTouch);
+        
+        // Создаем новые обработчики с привязкой к контексту
+        this.handleWrapperClick = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          this.userGesturePerformed = true;
+          this.handleTouchInteraction(wrapper);
+        };
+        
+        this.handleWrapperTouch = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          this.userGesturePerformed = true;
+          this.handleTouchInteraction(wrapper);
+        };
+        
+        wrapper.addEventListener('click', this.handleWrapperClick);
+        wrapper.addEventListener('touchstart', this.handleWrapperTouch, { passive: false });
+        
+      } else {
+        // Механика ховера (для десктопов с широким экраном)
+        wrapper.addEventListener('mouseenter', () => this.handleMouseEnter(wrapper));
+        wrapper.addEventListener('mouseleave', () => this.handleMouseLeave(wrapper));
+      }
+    });
+
+    // Добавляем обработчик клика по документу только в режиме click
+    if (this.interactionMode === 'click') {
+      this.handleDocumentClickBound = this.handleDocumentClick.bind(this);
+      document.addEventListener('click', this.handleDocumentClickBound);
+      document.addEventListener('touchstart', this.handleDocumentClickBound);
+    }
+  }
+
+  removeEventListeners() {
+    // Удаляем все обработчики событий с wrappers
+    this.wrappers.forEach(wrapper => {
+      // Клонируем wrapper чтобы удалить все обработчики
+      const newWrapper = wrapper.cloneNode(true);
+      if (wrapper.parentNode) {
+        wrapper.parentNode.replaceChild(newWrapper, wrapper);
+      }
+    });
+    
+    // Удаляем обработчики клика по документу
+    if (this.handleDocumentClickBound) {
+      document.removeEventListener('click', this.handleDocumentClickBound);
+      document.removeEventListener('touchstart', this.handleDocumentClickBound);
+    }
+    
+    // Очищаем кэш
+    this.wrapperActiveClasses.clear();
+    
+    // Обновляем wrappers
+    this.refreshWrappers();
+  }
+
+  getFullVideoSource(relativePath) {
+    if (relativePath.startsWith('http://') || relativePath.startsWith('https://') || relativePath.startsWith('//')) {
+      return relativePath;
+    }
+    if (relativePath.startsWith('/')) {
+      return window.location.origin + relativePath;
+    }
+    const basePath = window.location.origin + window.location.pathname;
+    const pathParts = basePath.split('/');
+    pathParts.pop();
+    return pathParts.join('/') + '/' + relativePath;
+  }
+
+  // === Обработчики событий ===
+
+  async handleMouseEnter(wrapper) {
+    await this.playVideo(wrapper);
+  }
+
+  handleMouseLeave(wrapper) {
+    this.pauseVideo(wrapper);
+    this.showPosterAndPlay(wrapper);
+  }
+
+  async handleTouchInteraction(wrapper) {
+    // Если кликаем на уже воспроизводящееся видео - пауза
+    if (this.currentPlayingVideo === wrapper) {
+      this.pauseVideo(wrapper);
+      this.showPosterAndPlay(wrapper);
+      this.currentPlayingVideo = null;
+    } else {
+      // Если другое видео играет - останавливаем его
+      if (this.currentPlayingVideo) {
+        this.pauseVideo(this.currentPlayingVideo);
+        this.showPosterAndPlay(this.currentPlayingVideo);
+      }
+      // Воспроизводим новое видео
+      await this.playVideo(wrapper);
+    }
+  }
+
+  handleDocumentClick(event) {
+    // Проверяем, был ли клик внутри любого wrapper
+    let clickedInsideWrapper = false;
+    let clickedWrapper = null;
+    
+    this.wrappers.forEach(wrapper => {
+      if (wrapper.contains(event.target)) {
+        clickedInsideWrapper = true;
+        clickedWrapper = wrapper;
+      }
+    });
+    
+    // Если клик был вне всех wrappers И есть текущее воспроизводящееся видео
+    if (!clickedInsideWrapper && this.currentPlayingVideo) {
+      // Пауза текущего видео и показ постера
+      this.pauseVideo(this.currentPlayingVideo);
+      this.showPosterAndPlay(this.currentPlayingVideo);
+      this.currentPlayingVideo = null;
+    }
+  }
+
+  // === Управление видео ===
+
+  async playVideo(wrapper) {
+    // Проверяем, что wrapper существует
+    if (!wrapper || !document.body.contains(wrapper)) {
+      this.currentPlayingVideo = null;
+      return;
+    }
+
+    const video = wrapper.querySelector('video');
+    if (!video) return;
+
+    try {
+      // Скрываем постер и кнопку плей
+      this.hidePosterAndPlay(wrapper);
+
+      if (video.ended) video.currentTime = 0;
+      
+      // Для iOS обязательно muted
+      video.muted = true;
+      
+      // Убираем постер
+      const originalPoster = video.dataset.originalPoster;
+      if (originalPoster) {
+        video.poster = '';
+      }
+
+      // Воспроизведение с обработкой iOS/Safari
+      const playWithRetry = async () => {
+        try {
+          await video.play();
+          return true;
+        } catch (err) {
+          console.log('First play attempt failed, retrying...', err);
+          
+          // Для iOS/Safari пробуем второй раз через небольшую задержку
+          return new Promise(resolve => {
+            setTimeout(async () => {
+              try {
+                if (video.currentTime > 0) {
+                  video.currentTime = 0;
+                }
+                await video.play();
+                resolve(true);
+              } catch (retryErr) {
+                console.log('Second play attempt failed', retryErr);
+                
+                // Третья попытка
+                try {
+                  video.muted = true;
+                  await video.play();
+                  resolve(true);
+                } catch (finalErr) {
+                  console.log('Final play attempt failed', finalErr);
+                  resolve(false);
+                }
+              }
+            }, 50);
+          });
+        }
+      };
+
+      const success = await playWithRetry();
+      
+      if (success) {
+        this.currentPlayingVideo = wrapper;
+        
+        video.onended = () => {
+          // При окончании видео возвращаемся к началу и снова играем
+          video.currentTime = 0;
+          setTimeout(() => {
+            video.play().catch(() => {});
+          }, 100);
+        };
+        
+        video.onerror = () => {
+          // При ошибке показываем постер
+          this.showPosterAndPlay(wrapper);
+          this.currentPlayingVideo = null;
+        };
+        
+      } else {
+        throw new Error('Failed to play video');
+      }
+      
+    } catch (e) {
+      console.error('Error playing video:', e);
+      // Восстанавливаем постер и показываем UI
+      this.showPosterAndPlay(wrapper);
+      this.currentPlayingVideo = null;
+    }
+  }
+
+  pauseVideo(wrapper) {
+    // Проверяем, что wrapper существует
+    if (!wrapper || !document.body.contains(wrapper)) {
+      this.currentPlayingVideo = null;
+      return;
+    }
+
+    const video = wrapper.querySelector('video');
+    if (!video) return;
+
+    try {
+      video.pause();
+      video.onended = null;
+      video.onerror = null;
+      
+      // Восстанавливаем постер
+      const originalPoster = video.dataset.originalPoster;
+      if (originalPoster) {
+        video.poster = originalPoster;
+      }
+    } catch (e) {
+      console.error('Error pausing video:', e);
+    }
+  }
+
+  // === Управление UI: постер и кнопка плей ===
+
+  hidePosterAndPlay(wrapper) {
+    if (!wrapper || !document.body.contains(wrapper)) return;
+
+    try {
+      const posterClass = this.getActiveClassForElement(wrapper, '[hover-video-poster]', 'posterClass');
+      const playClass = this.getActiveClassForElement(wrapper, '[hover-video-play]', 'playClass');
+
+      const poster = wrapper.querySelector('[hover-video-poster]');
+      const playBtn = wrapper.querySelector('[hover-video-play]');
+
+      if (poster && posterClass) {
+        poster.classList.remove(posterClass);
+      }
+      if (playBtn && playClass) {
+        playBtn.classList.remove(playClass);
+      }
+    } catch (e) {
+      console.error('Error hiding poster/play:', e);
+    }
+  }
+
+  showPosterAndPlay(wrapper) {
+    if (!wrapper || !document.body.contains(wrapper)) return;
+
+    try {
+      const posterClass = this.getActiveClassForElement(wrapper, '[hover-video-poster]', 'posterClass');
+      const playClass = this.getActiveClassForElement(wrapper, '[hover-video-play]', 'playClass');
+
+      const poster = wrapper.querySelector('[hover-video-poster]');
+      const playBtn = wrapper.querySelector('[hover-video-play]');
+
+      if (poster && posterClass) {
+        poster.classList.add(posterClass);
+      }
+      if (playBtn && playClass) {
+        playBtn.classList.add(playClass);
+      }
+    } catch (e) {
+      console.error('Error showing poster/play:', e);
+    }
+  }
+
+  getActiveClassForElement(wrapper, selector, cacheKey) {
+    if (!wrapper || !document.body.contains(wrapper)) return null;
+
+    try {
+      const wrapperIndex = wrapper.dataset.hoverVideoIndex;
+      const cacheKeyFull = `wrapper_${wrapperIndex}_${cacheKey}`;
+      
+      // Проверяем кэш
+      if (this.wrapperActiveClasses.has(cacheKeyFull)) {
+        return this.wrapperActiveClasses.get(cacheKeyFull);
+      }
+
+      const el = wrapper.querySelector(selector);
+      if (!el) {
+        this.wrapperActiveClasses.set(cacheKeyFull, null);
+        return null;
+      }
+
+      // Ищем класс с --active
+      const classes = Array.from(el.classList);
+      const activeClass = classes.find(cls => 
+        cls.includes('--active') || cls.endsWith('--active')
+      );
+
+      this.wrapperActiveClasses.set(cacheKeyFull, activeClass || null);
+      return activeClass || null;
+    } catch (e) {
+      console.error('Error getting active class:', e);
+      return null;
+    }
+  }
+
+  // === Очистка ===
+
+  destroy() {
+    clearTimeout(this.resizeTimeout);
+    window.removeEventListener('resize', this.handleResize.bind(this));
+    
+    if (this.handleDocumentClickBound) {
+      document.removeEventListener('click', this.handleDocumentClickBound);
+      document.removeEventListener('touchstart', this.handleDocumentClickBound);
+    }
+    
+    // Останавливаем все видео
+    document.querySelectorAll('[hover-video-wrapper] video').forEach(video => {
+      video.pause();
+    });
+    
+    this.currentPlayingVideo = null;
+    this.wrappers = [];
+    this.wrapperActiveClasses.clear();
+  }
+}
+
+// Инициализация после загрузки DOM
+document.addEventListener('DOMContentLoaded', () => {
+  window.hoverVideoController = new HoverVideoController();
+});
+
+// Инициализация при загрузке страницы
+window.addEventListener('load', () => {
+  if (!window.hoverVideoController) {
+    window.hoverVideoController = new HoverVideoController();
+  }
+});
+
+// Повторная инициализация при изменении DOM (для SPA)
+if (typeof MutationObserver !== 'undefined') {
+  const observer = new MutationObserver(() => {
+    if (window.hoverVideoController && document.querySelector('[hover-video-wrapper]')) {
+      setTimeout(() => {
+        if (window.hoverVideoController) {
+          window.hoverVideoController.destroy();
+          window.hoverVideoController = new HoverVideoController();
+        }
+      }, 100);
+    }
+  });
+  
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+}
+</script>
+
+
+
+
+
+<html>
+  <section class="section">
+    <div class="container">
+      <div class="grid">
+        <div class="services">
+          <div class="services__heading"></div>
+          <div class="services__cards">
+            <div class="services__card"></div>
+            <div class="services__card"></div>
+            <div class="services__card"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services container grid">
+    <div class="services__heading"></div>
+      <div class="services__cards">
+        <div class="services__card"></div>
+        <div class="services__card"></div>
+        <div class="services__card"></div>
+      </div>
+  </section>
+</html>

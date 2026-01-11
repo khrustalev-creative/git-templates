@@ -73,117 +73,94 @@ re-captcha {
   --breakpoint-mobile: 479;
 }
 
-/* ЦВЕТ ДИЗАЙН-СИСТЕМА ====================================================================================================================================================== */
-/* ОСНОВНАЯ ТЕМА */
+/* ЦВЕТ ====================================================================================================================================================== */
 :root {
-  /* Базовые ------------------------------------- */
-  /* Текст и иконки */
-  --color-base-foreground: #191919;
-  --color-base-foreground-static: #191919;
+  /* ОСНОВНАЯ ТЕМА =========================================================================== */
+  /* Для проекта */
 
-  /* Приглушенный текст и иконки */
-  --color-base-foreground-muted: #393939;
-  --color-base-foreground-mute-static: #393939;
+  /* Базовые */
+  --color-base-foreground: #191919; /* Осноновй цвет текста и иконок */
+  --color-base-text-static: #191919; /* Основной цвет текста и иконок, не меняется при смене темы */
 
-  /* Фон */
-  --color-base-background: #ffffff;
-  --color-base-background-static: #ffffff;
+  --color-base-background: #191919; /* Цвет фона */
+  --color-base-background-static: #191919; /* Цвет фона, не меняется при смене темы */
 
-  /* Обводки/линии */
-  --color-base-border: #363636;
-  --color-base-border-static: #363636;
+  --color-alternate-foreground: #ffffff; /* Альтернативный цвет текста и иконок */
+  --color-alternate-foreground-static: #ffffff; /* Альтернативный цвет текста и иконок, не меняется при смене темы */
 
-  /* Альтернативные ------------------------------------- */
-  /* Текст и иконки */
-  --color-alternate-foreground: #ffffff;
-  --color-alternate-foreground-static: #ffffff;
+  --color-alternate-background: #ffffff; /* Основной цвет текста и иконок */
+  --color-alternate-background-static: #ffffff; /* Основной цвет текста и иконок, не меняется при смене темы */
 
-  /* Приглушенный текст и иконки */
-  --color-alternate-foreground-muted: #c2c2c2;
-  --color-alternate-foreground-mute-static: #c2c2c2;
+  /* Бренд */
+  --color-brand-text: #1f31f1; /* Акцентный цвет */
+  --color-brand-background: #1f31f1; /* Цвет фона */
 
-  /* Фон */
-  --color-alternate-background: #191919;
-  --color-alternate-background-static: #191919;
+  /* Системные */
+  --color-success-text: #5af064; /* Состояние успеха */
+  --color-success-background: #5af064; /* Состояние успеха */
+  --color-warning-text: #e9d357; /* Предупреждение */
+  --color-warning-background: #e9d357; /* Предупреждение */
+  --color-error-text: #ef5d5d; /* Состояние ошибки */
+  --color-error-background: #ef5d5d; /* Состояние ошибки */
 
-  /* Обводки/линии */
-  --color-alternate-border: #c8c8c8;
-  --color-alternate-border-static: #c8c8c8;
-
-  /* Бренд ------------------------------------- */
-  --color-brand: #1f31f1;
-  --color-brand-hover: #1d2dd7;
-  /* + Может быть focus / pressed */
-
-  /* Системные ------------------------------------- */
-  /* Успех */
-  --color-success: #5af064;
-
-  /* Ошибка */
-  --color-error: #ef5d5d;
-
-  /* Прозрачность ------------------------------------- */
+  /* Прозрачность */
   --opacity-line: 0.1;
-  --opacity-disabled: 0.3;
   --opacity-foreground: 0.5;
   --opacity-background: 0.7;
+
+  /* Для Style Guide */
+  --color-styleguide-base: #191919; /* Цвет текста и основных элементов */
+  --color-styleguide-base-alternate: #ffffff; /* Цвет фона */
+  --color-styleguide-alternate-static: #ffffff; /* Цвет фона */
+  --color-styleguide-base-contrast: #232323; /* Более светлый оттенок черного */
+  --color-styleguide-alternate-contrast: #f5f5f5; /* Более темный оттенок белого */
+  --color-styleguide-alternate-contrast-static: #f5f5f5; /* Более темный оттенок белого */
+  --color-styleguide-grey-dark: #7e7e7e; /* Обводка для примера */
+  --color-styleguide-grey-medium: #b7b7b7; /* Обводка для примера */
+  --color-styleguide-grey-light: rgba(0, 0, 0, 0.075); /* Обводка для примера */
+  --color-styleguide-base-deep: #ebebeb; /* Обводка для примера */
+  --color-styleguide-blue: #3545f8; /* Акцентный синий цвет, для тэга "class" */
+  --color-styleguide-blue-text: #3545f8; /* Акцентный синий цвет, для тэга "class" */
+  --color-styleguide-blue-light: rgba(31, 49, 241, 0.2); /* Светлый оттенок синего для тэга "var" */
+  --color-styleguide-red: #ff0000; /* Цвет направляющих сетки */
+  --color-styleguide-red-text: #ff0000; /* Цвет направляющих сетки */
+  --color-styleguide-red-light: rgba(255, 0, 0, 0.2); /* Цвет направляющих сетки */
+  --color-styleguide-magenta: #e610b6; /* Акцентный малиновый цвет, для тэга "tag" */
+  --color-styleguide-purple: #5a27f4; /* Акцентный сереневый цвет, для тэга "var" */
 }
 
 /* АЛЬТЕРНАТИВНАЯ ТЕМА =========================================================================== */
 [alt-theme] {
   /* Базовые */
-  --color-base-foreground: #ffffff;
-  --color-base-foreground-muted: #c2c2c2;
-  --color-base-background: #191919;
-  --color-base-border: #c8c8c8;
+  --color-base-foreground: #ffffff; /* Осноновй цвет текста и иконок */
+  --color-base-background: #ffffff; /* Цвет фона */
+  --color-alternate-text: #191919; /* Альтернативный цвет текста и иконок */
+  --color-alternate-background: #191919; /* Основной цвет текста и иконок */
 
-  /* Альтернативные */
-  --color-alternate-foreground: #191919;
-  --color-alternate-foreground-muted: #393939;
-  --color-alternate-background: #ffffff;
-  --color-alternate-border: #363636;
-}
+  /* Бренд */
+  --color-brand-text: #616eff; /* Акцентный цвет */
 
-/* STYLE GUIDE ====================================================================================================================================================== */
-:root {
-  --color-styleguide-base: #191919;
-  --color-styleguide-base-alternate: #ffffff;
-  --color-styleguide-alternate-static: #ffffff;
-  --color-styleguide-base-contrast: #232323;
-  --color-styleguide-alternate-contrast: #f5f5f5;
-  --color-styleguide-alternate-contrast-static: #f5f5f5;
-  --color-styleguide-grey-dark: #7e7e7e;
-  --color-styleguide-grey-medium: #b7b7b7;
-  --color-styleguide-grey-light: rgba(0, 0, 0, 0.1);
-  --color-styleguide-base-deep: #ebebeb;
-  --color-styleguide-blue: #3545f8;
-  --color-styleguide-blue-text: #3545f8;
-  --color-styleguide-blue-light: rgba(31, 49, 241, 0.1);
-  --color-styleguide-red: #ff0000;
-  --color-styleguide-red-text: #ff0000;
-  --color-styleguide-red-light: rgba(255, 0, 0, 0.2);
-  --color-styleguide-magenta: #e610b6;
-  --color-styleguide-purple: #5a27f4;
-}
-/* АЛЬТЕРНАТИВНАЯ ТЕМА =========================================================================== */
-[alt-theme] {
+  /* Для Style Guide */
   --color-styleguide-base: #ffffff;
   --color-styleguide-base-deep: #111111;
   --color-styleguide-base-alternate: #1f1f1f;
   --color-styleguide-base-contrast: #e7e7e7;
   --color-styleguide-alternate-contrast: #191919;
-  --color-styleguide-grey-light: rgba(255, 255, 255, 0.2);
-  --color-styleguide-blue-text: #7681fe;
-  --color-styleguide-purple: #693cf1;
-  --color-styleguide-blue-light: rgba(90, 102, 235, 0.2);
+  --color-styleguide-grey-light: rgba(255, 255, 255, 0.075);
+  --color-styleguide-blue-text: #616eff;
+  --color-styleguide-purple: #693cf1; /* Акцентный сереневый цвет, для тэга "var" */
 }
-
 /* Системная смена */
 /* @media (prefers-color-scheme: dark) */
 
+/* Предотвращаем мерцание при загрузке темы */
+.alt-theme-init {
+  visibility: hidden;
+}
+
 /* ВЫДЕЛЕННЫЙ ТЕКСТ =========================================================================== */
 .highlighted-text span span {
-  color: var(--color-brand) !important;
+  color: var(--color-brand-text) !important;
 }
 
 /* СИСТЕМА РАЗМЕРОВ ====================================================================================================================================================== */
@@ -452,14 +429,14 @@ html {
   /* Нативная плавная прокрутка */
   /* В редакторе Taptop не работает прокрутка с плавностью */
   /* scroll-behavior: smooth; */
-  background-color: var(--color-base-background);
+  background-color: var(--color-base);
 }
 
 /* ============================================================================================================================================================================== */
 /* ЭФФЕКТЫ ======================================================================================================================================================================= */
 /* ============================================================================================================================================================================== */
 
-/* ТЕНЬ ====================================================================================================================================================== */
+/* РАЗМЫТИЕ ТЕНИ ====================================================================================================================================================== */
 :root {
   --shadow-blur: 1rem;
   --shadow-color: rgba(0, 0, 0, 0.3);
@@ -633,9 +610,7 @@ svg {
 /* Плавная смена темы */
 * {
   transition: background var(--animation-duration-fast) var(--animation-timing-function),
-    background-color var(--animation-duration-fast) var(--animation-timing-function),
-    color var(--animation-duration-fast) var(--animation-timing-function),
-    opacity var(--animation-duration-fast) var(--animation-timing-function);
+    background-color var(--animation-duration-fast) var(--animation-timing-function);
 }
 /* * {
   transition: color var(--animation-duration-fast) var(--animation-timing-function),
@@ -796,10 +771,10 @@ textarea::-webkit-scrollbar-thumb {
 
 .tt-rich-code-block {
   margin-block: 0em 0em;
-  padding: 0;
-  /* border-radius: var(--size-xs); */
-  /* color: var(--color-base); */
-  background-color: transparent;
+  padding: var(--size-m);
+  border-radius: var(--size-xs);
+  color: var(--color-base);
+  background-color: var(--color-styleguide-base-deep);
 }
 
 .rich-text h1,
@@ -1081,16 +1056,12 @@ textarea::-webkit-scrollbar-thumb {
 
 .styleguide__nav-link:hover {
   background-color: var(--color-styleguide-blue-light);
-  color: var(--color-styleguide-blue-text);
 }
 .styleguide__tab-trigger:hover {
-  background-color: var(--color-styleguide-alternate-contrast);
-}
-.styleguide__tab-trigger--active {
-  cursor: default;
+  color: var(--color-styleguide-blue-text);
 }
 .styleguide__tab-trigger--active:hover {
-  background-color: var(--color-styleguide-base-alternate);
+  color: var(--color-styleguide-alternate-contrast-static);
 }
 
 /* ========================================================================================================================================================================== */

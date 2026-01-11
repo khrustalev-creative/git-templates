@@ -1,0 +1,270 @@
+/* ЦВЕТ ДИЗАЙН-СИСТЕМА ====================================================================================================================================================== */
+/* Примитивы */
+:root {
+  /* Primary (Брендовый цвет) */
+  --color-primary-50: #eff6ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-200: #bfdbfe;
+  --color-primary-300: #93c5fd;
+  --color-primary-400: #60a5fa;
+  --color-primary-500: #3b82f6; /* Брендовый цвет */
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #1e40af;
+  --color-primary-900: #1e3a8a;
+
+  /* Neutral (Нейтральные цвета) */
+  --color-neutral-0: #ffffff;
+  --color-neutral-50: #f9fafb;
+  --color-primary-100: #f3f4f6;
+  --color-neutral-200: #e5e7eb;
+  --color-neutral-300: #d1d5db;
+  --color-neutral-400: #9ca3af;
+  --color-neutral-500: #6b7280;
+  --color-neutral-600: #4b5563;
+  --color-neutral-700: #374151;
+  --color-neutral-800: #1f2937;
+  --color-neutral-900: #111827;
+  --color-neutral-950: #030712;
+
+  /* Success */
+  --color-success-50: #f0fdf4;
+  --color-success-100: #dcfce7;
+  --color-success-200: #bbf7d0;
+  --color-success-300: #86efac;
+  --color-success-400: #4ade80;
+  --color-success-500: #22c55e;
+  --color-success-600: #16a34a;
+  --color-success-700: #15803d;
+  --color-success-800: #166534;
+  --color-success-900: #14532d;
+
+  /* Warning */
+  --color-warning-50: #fffbeb;
+  --color-warning-100: #fef3c7;
+  --color-warning-200: #fde68a;
+  --color-warning-300: #fcd34d;
+  --color-warning-400: #fbbf24;
+  --color-warning-500: #f59e0b;
+  --color-warning-600: #d97706;
+  --color-warning-700: #b45309;
+  --color-warning-800: #92400e;
+  --color-warning-900: #78350f;
+
+  /* Error */
+  --color-error-50: #fef2f2;
+  --color-error-100: #fee2e2;
+  --color-error-200: #fecaca;
+  --color-error-300: #fca5a5;
+  --color-error-400: #f87171;
+  --color-error-500: #ef4444;
+  --color-error-600: #dc2626;
+  --color-error-700: #b91c1c;
+  --color-error-800: #991b1b;
+  --color-error-900: #7f1d1d;
+
+  /* Info */
+  --color-info-50: #f0f9ff;
+  --color-info-100: #e0f2fe;
+  --color-info-200: #bae6fd;
+  --color-info-300: #7dd3fc;
+  --color-info-400: #38bdf8;
+  --color-info-500: #0ea5e9;
+  --color-info-600: #0284c7;
+  --color-info-700: #0369a1;
+  --color-info-800: #075985;
+  --color-info-900: #0c4a6e;
+
+  /* Overlay (для модалок, затемнений) */
+  --color-overlay-50: rgba(0, 0, 0, 0.05);
+  --color-overlay-100: rgba(0, 0, 0, 0.1);
+  --color-overlay-200: rgba(0, 0, 0, 0.2);
+  --color-overlay-300: rgba(0, 0, 0, 0.3);
+  --color-overlay-400: rgba(0, 0, 0, 0.4);
+  --color-overlay-500: rgba(0, 0, 0, 0.5);
+  --color-overlay-600: rgba(0, 0, 0, 0.6);
+  --color-overlay-700: rgba(0, 0, 0, 0.7);
+  --color-overlay-800: rgba(0, 0, 0, 0.8);
+  --color-overlay-900: rgba(0, 0, 0, 0.9);
+
+  /* Transparent */
+  --color-transparent: transparent;
+}
+
+/* Семантические / Текст */
+:root {
+  /* Основной текст */
+  --color-text-primary: var(--color-neutral-900);
+  --color-text-secondary: var(--color-neutral-600);
+  --color-text-tertiary: var(--color-neutral-400);
+  --color-text-quaternary: var(--color-neutral-300);
+  --color-text-placeholder: var(--color-neutral-500);
+
+  /* Текст на цветном фоне */
+  --color-text-on-primary: var(--color-neutral-0);
+  --color-text-on-success: var(--color-neutral-0);
+  --color-text-on-warning: var(--color-neutral-900);
+  --color-text-on-error: var(--color-neutral-0);
+  --color-text-on-info: var(--color-neutral-0);
+
+  /* Ссылки */
+  --color-text-link: var(--color-primary-600);
+  --color-text-link-hover: var(--color-primary-700);
+  --color-text-link-visited: var(--color-primary-800);
+
+  /* Интерактивный текст */
+  --color-text-interactive: var(--color-primary-600);
+  --color-text-interactive-hover: var(--color-primary-700);
+  --color-text-interactive-pressed: var(--color-primary-800);
+
+  /* Disabled */
+  --color-text-disabled: var(--color-neutral-400);
+}
+
+/* Семантические / Фон */
+:root {
+  /* Основные фоны */
+  --color-background-primary: var(--color-neutral-0);
+  --color-background-secondary: var(--color-neutral-50);
+  --color-background-tertiary: var(--color-neutral-100);
+  --color-background-quaternary: var(--color-neutral-200);
+
+  /* Специальные фоны */
+  --color-background-overlay: var(--color-overlay-500);
+  --color-background-backdrop: var(--color-overlay-200);
+
+  /* Интерактивные фоны */
+  --color-background-interactive: var(--color-primary-500);
+  --color-background-interactive-hover: var(--color-primary-600);
+  --color-background-interactive-pressed: var(--color-primary-700);
+  --color-background-interactive-disabled: var(--color-neutral-200);
+
+  /* Статусные фоны */
+  --color-background-success: var(--color-success-50);
+  --color-background-warning: var(--color-warning-50);
+  --color-background-error: var(--color-error-50);
+  --color-background-info: var(--color-info-50);
+
+  /* Выделенные области */
+  --color-background-selected: var(--color-primary-50);
+  --color-background-hover: var(--color-neutral-100);
+  --color-background-pressed: var(--color-neutral-200);
+}
+
+/* Семантические / Обводки/Линии */
+:root {
+  /* Основные границы */
+  --color-border-primary: var(--color-neutral-300);
+  --color-border-secondary: var(--color-neutral-200);
+  --color-border-tertiary: var(--color-neutral-100);
+
+  /* Интерактивные границы */
+  --color-border-interactive: var(--color-primary-500);
+  --color-border-interactive-hover: var(--color-primary-600);
+  --color-border-focus: var(--color-primary-500);
+  --color-border-focus-ring: var(--color-primary-100);
+
+  /* Статусные границы */
+  --color-border-success: var(--color-success-200);
+  --color-border-warning: var(--color-warning-200);
+  --color-border-error: var(--color-error-200);
+  --color-border-info: var(--color-info-200);
+
+  /* Disabled */
+  --color-border-disabled: var(--color-neutral-200);
+}
+
+/* Семантические / Действия */
+:root {
+  /* Primary Actions */
+  --color-action-primary: var(--color-primary-500);
+  --color-action-primary-hover: var(--color-primary-600);
+  --color-action-primary-pressed: var(--color-primary-700);
+  --color-action-primary-disabled: var(--color-neutral-300);
+
+  /* Secondary Actions */
+  --color-action-secondary: var(--color-neutral-200);
+  --color-action-secondary-hover: var(--color-neutral-300);
+  --color-action-secondary-pressed: var(--color-neutral-400);
+
+  /* Danger Actions */
+  --color-action-danger: var(--color-error-500);
+  --color-action-danger-hover: var(--color-error-600);
+  --color-action-danger-pressed: var(--color-error-700);
+
+  /* Success Actions */
+  --color-action-success: var(--color-success-500);
+  --color-action-success-hover: var(--color-success-600);
+  --color-action-success-pressed: var(--color-success-700);
+}
+
+/* Семантические / Состояния */
+:root {
+  /* Success */
+  --color-status-success: var(--color-success-500);
+  --color-status-success-subtle: var(--color-success-100);
+  --color-status-success-strong: var(--color-success-700);
+
+  /* Warning */
+  --color-status-warning: var(--color-warning-500);
+  --color-status-warning-subtle: var(--color-warning-100);
+  --color-status-warning-strong: var(--color-warning-700);
+
+  /* Error */
+  --color-status-error: var(--color-error-500);
+  --color-status-error-subtle: var(--color-error-100);
+  --color-status-error-strong: var(--color-error-700);
+
+  /* Info */
+  --color-status-info: var(--color-info-500);
+  --color-status-info-subtle: var(--color-info-100);
+  --color-status-info-strong: var(--color-info-700);
+
+  /* Neutral */
+  --color-status-neutral: var(--color-neutral-500);
+  --color-status-neutral-subtle: var(--color-neutral-100);
+  --color-status-neutral-strong: var(--color-neutral-700);
+}
+
+/* АЛЬТЕРНАТИВНАЯ ТЕМА =========================================================================== */
+[data-theme="dark"] {
+  /* Примитивы могут остаться теми же, но чаще для темной темы создают отдельные палитры */
+
+  /* Пример переопределения НЕКОТОРЫХ примитивов для темной темы */
+  --color-neutral-0: #030712;
+  --color-neutral-50: #111827;
+  --color-neutral-100: #1f2937;
+  --color-neutral-200: #374151;
+  --color-neutral-300: #4b5563;
+  --color-neutral-400: #6b7280;
+  --color-neutral-500: #9ca3af;
+  --color-neutral-600: #d1d5db;
+  --color-neutral-700: #e5e7eb;
+  --color-neutral-800: #f3f4f6;
+  --color-neutral-900: #f9fafb;
+  --color-neutral-950: #ffffff;
+
+  /* Переназначение семантических токенов */
+  --color-text-primary: var(--color-neutral-900);
+  --color-text-secondary: var(--color-neutral-700);
+  --color-background-primary: var(--color-neutral-0);
+  --color-background-secondary: var(--color-neutral-50);
+
+  /* Для акцентных цветов в темной теме используем более светлые оттенки */
+  --color-action-primary: var(--color-primary-400);
+  --color-action-primary-hover: var(--color-primary-300);
+
+  /* Особые настройки для темной темы */
+  --color-overlay-500: rgba(255, 255, 255, 0.08);
+  --color-overlay-900: rgba(255, 255, 255, 0.16);
+
+  /* Для Style Guide */
+  --color-styleguide-base: #ffffff;
+  --color-styleguide-base-deep: #111111;
+  --color-styleguide-base-alternate: #1f1f1f;
+  --color-styleguide-base-contrast: #e7e7e7;
+  --color-styleguide-alternate-contrast: #191919;
+  --color-styleguide-grey-light: rgba(255, 255, 255, 0.075);
+  --color-styleguide-blue-text: #616eff;
+  --color-styleguide-purple: #693cf1; /* Акцентный сереневый цвет, для тэга "var" */
+}

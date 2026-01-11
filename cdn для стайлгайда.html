@@ -1,5 +1,4 @@
 <script>
-  // ⚡ УЛУЧШЕННАЯ ВЕРСИЯ С ОБНОВЛЕНИЕМ CSS
   ;(function () {
     let useLocal = true
     let lastJsTime = 0
@@ -7,92 +6,79 @@
     let cssVersion = 0
 
     function load() {
-      const host = useLocal ? "http://localhost:5501" : "https://khrustalev-creative.github.io/git-templates"
+      const host = "http://localhost:5500"
 
       const t = Date.now()
 
-      // CSS - добавляем версию
       cssVersion++
       const css = document.createElement("link")
       css.rel = "stylesheet"
       css.href = `${host}/styles.css?t=${t}&v=${cssVersion}`
       css.dataset.version = cssVersion
       css.onerror = () => {
-        useLocal = false
-        load()
+        console.error("Ошибка загрузки CSS")
       }
       document.head.appendChild(css)
 
-      // JS
       const js = document.createElement("script")
-      js.src = `${host}/app.js?t=${t}`
+      js.src = `${host}/scripts.js?t=${t}`
       js.onerror = () => {
-        useLocal = false
-        load()
+        console.error("Ошибка загрузки JS")
       }
       document.head.appendChild(js)
 
-      console.log(useLocal ? "📡 Локальный" : "🌐 GitHub")
+      console.log("Файлы загружены с локального сервера")
     }
 
-    // Функция обновления CSS (без перезагрузки страницы)
     function updateCSS(host) {
       cssVersion++
       const t = Date.now()
 
-      // Удалить только старые стили с этого хоста
       document.querySelectorAll(`link[href*="${host}"]`).forEach((link) => {
         if (link.href.includes("styles.css")) {
           link.remove()
         }
       })
 
-      // Добавить новые
       const newCss = document.createElement("link")
       newCss.rel = "stylesheet"
       newCss.href = `${host}/styles.css?t=${t}&v=${cssVersion}`
       newCss.dataset.version = cssVersion
       document.head.appendChild(newCss)
 
-      console.log("🎨 CSS обновлен")
+      console.log("CSS обновлен")
     }
 
-    // Проверять обновления
     setInterval(async () => {
       try {
-        const host = useLocal ? "http://localhost:5501" : "https://khrustalev-creative.github.io/git-templates"
+        const host = "http://localhost:5500"
 
-        // Параллельно проверяем оба файла
         const [jsRes, cssRes] = await Promise.all([
-          fetch(`${host}/app.js?check=${Date.now()}`),
+          fetch(`${host}/scripts.js?check=${Date.now()}`),
           fetch(`${host}/styles.css?check=${Date.now()}`),
         ])
 
         const jsTime = new Date(jsRes.headers.get("last-modified")).getTime()
         const cssTime = new Date(cssRes.headers.get("last-modified")).getTime()
 
-        // Если JS изменился - перезагрузка
         if (lastJsTime && jsTime > lastJsTime) {
-          console.log("🔄 JS изменен, перезагружаю...")
+          console.log("JS изменен, перезагружаю...")
           window.location.reload()
           return
         }
 
-        // Если CSS изменился - обновить только стили
         if (lastCssTime && cssTime > lastCssTime) {
-          console.log("🎨 CSS изменен, обновляю...")
+          console.log("CSS изменен, обновляю...")
           updateCSS(host)
         }
 
-        // Сохраняем время последней проверки
         lastJsTime = jsTime || lastJsTime
         lastCssTime = cssTime || lastCssTime
-      } catch {
-        useLocal = false
+      } catch (error) {
+        console.error("Ошибка проверки обновлений:", error.message)
       }
-    }, 300) // Чаще проверяем - 300ms
+    }, 300)
 
-    // Первоначальная загрузка
     load()
   })()
 </script>
